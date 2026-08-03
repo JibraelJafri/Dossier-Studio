@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, Cambria, serif;
+  --font-sans:
+    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+}
+
+:root {
+  /* Editorial Monograph Light Theme */
+  --bg-app: #f4f3ee;
+  --bg-sheet: #ffffff;
+  --bg-subtle: #f7f6f1;
+  --bg-muted: #eceae2;
+  --border-sheet: #e2ded4;
+  --border-subtle: #edeae1;
+  --text-main: #181614;
+  --text-body: #2e2b27;
+  --text-muted: #666158;
+  --text-faint: #969085;
+
+  --accent-base: #c2410c;
+  --accent-light: #ea580c;
+  --accent-soft: rgba(194, 65, 12, 0.08);
+  --accent-border: rgba(194, 65, 12, 0.25);
+
+  --shadow-sheet: 0 1px 3px 0 rgba(28, 25, 23, 0.04), 0 8px 24px -4px rgba(28, 25, 23, 0.07);
+}
+
+.dark {
+  /* Obsidian Monograph Dark Theme */
+  --bg-app: #0b0a09;
+  --bg-sheet: #131211;
+  --bg-subtle: #1a1918;
+  --bg-muted: #242220;
+  --border-sheet: #282522;
+  --border-subtle: #1f1d1a;
+  --text-main: #f5f4ef;
+  --text-body: #d5d1c8;
+  --text-muted: #9c978e;
+  --text-faint: #68635c;
+
+  --accent-base: #f97316;
+  --accent-light: #fb923c;
+  --accent-soft: rgba(249, 115, 22, 0.12);
+  --accent-border: rgba(249, 115, 22, 0.3);
+
+  --shadow-sheet: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 16px 48px -8px rgba(0, 0, 0, 0.7);
+}
+
+/* Accent Palettes */
+.theme-amber {
+  --accent-base: #b45309;
+  --accent-light: #d97706;
+  --accent-soft: rgba(180, 83, 9, 0.08);
+  --accent-border: rgba(180, 83, 9, 0.25);
+}
+.theme-cobalt {
+  --accent-base: #2563eb;
+  --accent-light: #3b82f6;
+  --accent-soft: rgba(37, 99, 235, 0.08);
+  --accent-border: rgba(37, 99, 235, 0.25);
+}
+.theme-emerald {
+  --accent-base: #059669;
+  --accent-light: #10b981;
+  --accent-soft: rgba(5, 150, 105, 0.08);
+  --accent-border: rgba(5, 150, 105, 0.25);
+}
+.theme-slate {
+  --accent-base: #334155;
+  --accent-light: #64748b;
+  --accent-soft: rgba(51, 65, 85, 0.08);
+  --accent-border: rgba(51, 65, 85, 0.25);
+}
+
+.dark.theme-amber,
+.dark .theme-amber,
+[data-theme="dark"].theme-amber {
+  --accent-base: #f59e0b;
+  --accent-light: #fbbf24;
+  --accent-soft: rgba(245, 158, 11, 0.14);
+  --accent-border: rgba(245, 158, 11, 0.3);
+}
+.dark.theme-cobalt,
+.dark .theme-cobalt,
+[data-theme="dark"].theme-cobalt {
+  --accent-base: #60a5fa;
+  --accent-light: #93c5fd;
+  --accent-soft: rgba(96, 165, 250, 0.14);
+  --accent-border: rgba(96, 165, 250, 0.3);
+}
+.dark.theme-emerald,
+.dark .theme-emerald,
+[data-theme="dark"].theme-emerald {
+  --accent-base: #34d399;
+  --accent-light: #6ee7b7;
+  --accent-soft: rgba(52, 211, 153, 0.14);
+  --accent-border: rgba(52, 211, 153, 0.3);
+}
+.dark.theme-slate,
+.dark .theme-slate,
+[data-theme="dark"].theme-slate {
+  --accent-base: #94a3b8;
+  --accent-light: #cbd5e1;
+  --accent-soft: rgba(148, 163, 184, 0.14);
+  --accent-border: rgba(148, 163, 184, 0.3);
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography Modes */
+.dossier-editorial {
+  font-family: var(--font-serif);
+  --doc-font-prose: var(--font-serif);
+  --doc-leading-prose: 1.82;
+  --doc-size-prose: 16px;
+}
+.dossier-editorial h1,
+.dossier-editorial h2,
+.dossier-editorial h3,
+.dossier-editorial p,
+.dossier-editorial div:not([class*="font-mono"]):not([class*="font-sans"]),
+.dossier-editorial span:not([class*="font-mono"]):not([class*="font-sans"]) {
+  font-family: var(--font-serif);
+}
+
+.dossier-modern {
+  font-family: var(--font-sans);
+  --doc-font-prose: var(--font-sans);
+  --doc-leading-prose: 1.72;
+  --doc-size-prose: 15.5px;
+}
+.dossier-modern h1,
+.dossier-modern h2,
+.dossier-modern h3,
+.dossier-modern p {
+  font-family: var(--font-sans);
+}
+
+/* Subtle, dignified contenteditable interaction */
+[contenteditable="true"] {
+  outline: none;
+  cursor: text;
+  border-radius: 3px;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+  position: relative;
+}
+[contenteditable="true"]:hover {
+  background-color: var(--accent-soft);
+}
+[contenteditable="true"]:focus {
+  background-color: transparent;
+  box-shadow: 0 0 0 1.5px var(--accent-base);
+}
+
+/* PDF Preview Mode (Strict WYSIWYG without editor artifacts or extra whitespace) */
+.preview-mode {
+  user-select: text;
+}
+
+.preview-mode [contenteditable="true"],
+.preview-mode [contenteditable="false"],
+.preview-mode [contenteditable] {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  cursor: default !important;
+}
+
+.preview-mode a,
+.preview-mode .dossier-link {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.preview-mode .no-print {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+  visibility: hidden !important;
+}
+
+.preview-mode button.no-print,
+.preview-mode div.no-print,
+.preview-mode span.no-print {
+  display: none !important;
+}
+
+.preview-mode .markdown-toolbar-container {
+  display: none !important;
+}
+
+/* Editorial Links */
+.dossier-link {
+  color: var(--accent-base);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-border);
+  text-underline-offset: 3px;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+  cursor: pointer;
+}
+.dossier-link:hover {
+  color: var(--accent-light);
+  text-decoration-color: var(--accent-base);
+}
+
+/* Print Overrides for 1-Page Calibrated A4 */
+@page {
+  size: A4 portrait;
+  margin: 12mm 14mm 12mm 14mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  [contenteditable="true"]:hover,
+  [contenteditable="true"]:focus {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
