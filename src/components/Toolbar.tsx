@@ -95,8 +95,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const paletteMenuRef = useRef<HTMLDivElement>(null);
   const spacingMenuRef = useRef<HTMLDivElement>(null);
 
+  const isAnyMenuOpen = isSectionsMenuOpen || isPaletteMenuOpen || isSpacingMenuOpen;
+
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    if (!isAnyMenuOpen) return;
+
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
       const target = event.target as Node;
       if (sectionsMenuRef.current && !sectionsMenuRef.current.contains(target)) {
         setIsSectionsMenuOpen(false);
@@ -118,12 +122,14 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     }
 
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [isAnyMenuOpen]);
 
   const palettes: { id: ThemePalette; name: string; lightHex: string; darkHex: string }[] = [
     { id: "", name: "Terracotta", lightHex: "#c2410c", darkHex: "#f97316" },
@@ -279,7 +285,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         </div>
 
         {/* Tier 2: Formatting & Parameter Controls */}
-        <div className="h-10 px-3 sm:px-4 bg-[var(--bg-subtle)]/50 rounded-b-2xl flex items-center justify-between gap-2 text-xs overflow-x-auto scrollbar-none">
+        <div className="min-h-10 sm:h-10 px-3 sm:px-4 bg-[var(--bg-subtle)]/50 rounded-b-2xl flex flex-wrap items-center justify-between gap-2 text-xs py-1.5 sm:py-0">
           {/* Presets & Scale */}
           <div className="flex items-center gap-2 shrink-0">
             <nav className="inline-flex items-center bg-[var(--bg-sheet)] border border-[var(--border-sheet)] p-0.5 rounded-lg text-xs font-medium shadow-2xs">
@@ -418,7 +424,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
                 {isSpacingMenuOpen && (
                   <div
-                    className="absolute right-0 top-full mt-2 w-72 bg-[var(--bg-sheet)] rounded-xl shadow-2xl p-3 z-50 text-xs space-y-3 border border-[var(--border-sheet)] animate-in fade-in zoom-in-95 duration-100"
+                    className="absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] bg-[var(--bg-sheet)] rounded-xl shadow-2xl p-3 z-50 text-xs space-y-3 border border-[var(--border-sheet)] animate-in fade-in zoom-in-95 duration-100"
                     role="dialog"
                     aria-label="Canvas Spacing Control"
                   >
@@ -620,7 +626,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
               {isPaletteMenuOpen && (
                 <div
-                  className="absolute right-0 top-full mt-2 w-48 bg-[var(--bg-sheet)] rounded-xl shadow-2xl p-1.5 z-50 text-xs space-y-0.5 border border-[var(--border-sheet)] animate-in fade-in zoom-in-95 duration-100"
+                  className="absolute right-0 top-full mt-2 w-48 max-w-[calc(100vw-2rem)] bg-[var(--bg-sheet)] rounded-xl shadow-2xl p-1.5 z-50 text-xs space-y-0.5 border border-[var(--border-sheet)] animate-in fade-in zoom-in-95 duration-100"
                   role="dialog"
                   aria-label="Theme Color Palette"
                 >
@@ -697,7 +703,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
               {isSectionsMenuOpen && (
                 <div
-                  className="absolute right-0 top-full mt-2 w-60 bg-[var(--bg-sheet)] rounded-xl shadow-2xl p-2.5 z-50 text-xs space-y-1 border border-[var(--border-sheet)] animate-in fade-in zoom-in-95 duration-100"
+                  className="absolute right-0 top-full mt-2 w-60 max-w-[calc(100vw-2rem)] bg-[var(--bg-sheet)] rounded-xl shadow-2xl p-2.5 z-50 text-xs space-y-1 border border-[var(--border-sheet)] animate-in fade-in zoom-in-95 duration-100"
                   role="dialog"
                   aria-label="Document Sections Visibility"
                 >
