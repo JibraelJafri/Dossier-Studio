@@ -141,8 +141,8 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
         {/* Right QR Block */}
         {showSignoffMeta && (
           <div className="group/qr-anchor relative shrink-0 sm:self-end">
-            {!disabled && (
-              <div className="absolute -top-7 right-0 z-30 transition-all duration-150 ease-out opacity-0 pointer-events-none group-hover/qr-anchor:opacity-100 group-hover/qr-anchor:pointer-events-auto no-print flex items-center gap-1">
+            {!disabled && !isEditingQr && (
+              <div className="absolute bottom-full right-0 pb-2 pt-1 px-1 -mr-1 z-30 transition-all duration-150 ease-out delay-150 opacity-0 pointer-events-none group-hover/qr-anchor:opacity-100 group-hover/qr-anchor:pointer-events-auto group-hover/qr-anchor:delay-0 no-print flex items-center gap-1">
                 <button
                   type="button"
                   onClick={() => {
@@ -269,7 +269,7 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
       {showFooterStamp && (
         <div className="group/stamp relative pt-3 flex flex-col sm:flex-row items-center sm:items-baseline justify-between text-[11px] text-[var(--text-faint)] gap-2">
           {!disabled && (
-            <div className="absolute -top-3 right-0 z-30 pb-1.5 transition-all duration-150 ease-out opacity-0 pointer-events-none group-hover/stamp:opacity-100 group-hover/stamp:pointer-events-auto no-print">
+            <div className="absolute -top-3 right-0 z-30 pb-1.5 transition-all duration-150 ease-out delay-150 opacity-0 pointer-events-none group-hover/stamp:opacity-100 group-hover/stamp:pointer-events-auto group-hover/stamp:delay-0 no-print">
               <button
                 type="button"
                 onClick={onToggleFooterStamp}
