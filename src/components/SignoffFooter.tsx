@@ -109,7 +109,7 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
             className={
               isEditorial ?
                 "font-serif italic text-base sm:text-lg text-(--text-muted) leading-tight"
-              : "text-[10.5px] font-semibold uppercase tracking-[0.16em] text-(--text-faint) leading-tight"
+              : "text-[10.5px] font-semibold uppercase tracking-wider text-(--text-faint) leading-tight"
             }
           />
 
@@ -120,8 +120,8 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
             disabled={disabled}
             className={
               isEditorial ?
-                "font-serif italic text-3xl sm:text-4xl text-(--text-main) font-normal tracking-wide leading-none py-0.5"
-              : "text-2xl sm:text-[28px] font-bold tracking-tight text-(--text-main) leading-none py-0.5"
+                "font-serif italic text-3xl sm:text-4xl text-(--text-main) font-normal tracking-wide leading-none py-1"
+              : "text-2xl sm:text-[28px] font-bold tracking-tight text-(--text-main) leading-none py-1"
             }
           />
 
@@ -132,8 +132,8 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
             disabled={disabled}
             className={
               isEditorial ?
-                "font-serif text-[14px] sm:text-base tracking-wide text-(--accent-base) leading-tight font-medium"
-              : "text-[12.5px] sm:text-[13px] font-medium tracking-tight text-(--accent-base) leading-tight"
+                "font-serif text-[14px] sm:text-base tracking-wide text-(--accent-base) leading-tight font-medium mt-1.5 block"
+              : "text-[12.5px] sm:text-[13px] font-medium tracking-tight text-(--accent-base) leading-tight mt-1.5 block"
             }
           />
         </div>
@@ -169,7 +169,7 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
                   type="button"
                   onClick={onToggleSignoffMeta}
                   className="p-1 rounded bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) text-(--text-faint) hover:text-(--text-main) shadow-2xs transition-colors cursor-pointer"
-                  title="Hide QR code (re-enable in Sections menu)"
+                  title="Hide QR code"
                 >
                   <EyeOff className="w-3 h-3" />
                 </button>
@@ -196,7 +196,7 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
             >
               <DossierQrCode
                 value={normalizedQrUrl}
-                size={62}
+                size={67}
                 className="text-(--text-main) block"
                 eyeColor="var(--accent-base)"
               />
@@ -274,7 +274,7 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
                 type="button"
                 onClick={onToggleFooterStamp}
                 className="p-1 rounded-md bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) shadow-xs text-(--text-faint) hover:text-(--text-main) hover:border-(--accent-base) cursor-pointer flex items-center justify-center"
-                title="Hide footer note (re-enable in Sections menu)"
+                title="Hide footer note"
               >
                 <EyeOff className="w-3 h-3" />
               </button>

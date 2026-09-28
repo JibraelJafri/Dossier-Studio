@@ -1,10 +1,13 @@
 import { PdfExportConfig } from "../types.ts";
 import { normalizeUrl } from "./urlPolicy.ts";
 
+export type ExportStage = "preparing" | "rendering" | "compiling" | "success";
+
 export interface ExecutePdfExportArgs {
   sheetElement: HTMLElement;
   config: PdfExportConfig;
   isDark: boolean;
+  onProgress?: (stage: ExportStage) => void;
 }
 
 interface ExtractedWordItem {
@@ -37,29 +40,28 @@ export const CANONICAL_WIDTH_PX = 896;
 
 export function calculateContentTightHeight(
   sheetElement: HTMLElement,
-  padBottomFallback = 48,
+  padBottomFallback = 32,
 ): number {
-  const sheetTop = sheetElement.getBoundingClientRect().top;
-  let maxBottom = 0;
-  const allElements = Array.from(sheetElement.querySelectorAll("*")) as HTMLElement[];
-
-  allElements.forEach((el) => {
-    if (
-      el.closest(".no-print") ||
-      el.closest("[data-pdf-remove]") ||
-      el.id === "a4-page-guideline"
-    ) {
-      return;
-    }
-    const rect = el.getBoundingClientRect();
-    if (rect.width === 0 && rect.height === 0) return;
-    const b = rect.bottom - sheetTop;
-    if (b > maxBottom) maxBottom = b;
-  });
-
   const padBottom =
     parseFloat(window.getComputedStyle(sheetElement).paddingBottom || "0") || padBottomFallback;
-  return Math.max(600, Math.ceil(maxBottom + padBottom));
+
+  // Measure untransformed layout offset to the footer baseline (immune to scale transforms)
+  const footer = sheetElement.querySelector("footer");
+  if (footer && footer instanceof HTMLElement) {
+    let offsetTop = 0;
+    let curr: HTMLElement | null = footer;
+    while (curr && curr !== sheetElement) {
+      offsetTop += curr.offsetTop;
+      curr = curr.offsetParent as HTMLElement | null;
+    }
+    const tightHeight = Math.ceil(offsetTop + footer.offsetHeight + padBottom);
+    if (tightHeight >= 500 && tightHeight <= 3500) {
+      return tightHeight;
+    }
+  }
+
+  // Fallback to untransformed scrollHeight
+  return Math.max(600, Math.ceil(sheetElement.scrollHeight || 1000));
 }
 
 export function cleanTextForPdf(text: string): string {
@@ -106,73 +108,135 @@ export function toSafeRgb(colorStr: string): string {
     }
   }
 
+  if (colorStr.includes("oklab") || colorStr.includes("oklch") || colorStr.includes("color-mix")) {
+    return "#181614";
+  }
+
   return colorStr;
 }
 
-function sanitizeClonedColors(root: HTMLElement): void {
-  const allElements = [root, ...Array.from(root.querySelectorAll("*"))] as HTMLElement[];
+const ALL_LAYOUT_PROPS: (keyof CSSStyleDeclaration)[] = [
+  "display",
+  "boxSizing",
+  "position",
+  "flexDirection",
+  "flexWrap",
+  "alignItems",
+  "justifyContent",
+  "gap",
+  "rowGap",
+  "columnGap",
+  "gridTemplateColumns",
+  "gridTemplateRows",
+  "fontFamily",
+  "fontSize",
+  "fontWeight",
+  "fontStyle",
+  "lineHeight",
+  "textAlign",
+  "textTransform",
+  "paddingTop",
+  "paddingBottom",
+  "paddingLeft",
+  "paddingRight",
+  "marginTop",
+  "marginBottom",
+  "marginLeft",
+  "marginRight",
+  "borderTopWidth",
+  "borderBottomWidth",
+  "borderLeftWidth",
+  "borderRightWidth",
+  "borderTopStyle",
+  "borderBottomStyle",
+  "borderLeftStyle",
+  "borderRightStyle",
+  "borderTopLeftRadius",
+  "borderTopRightRadius",
+  "borderBottomLeftRadius",
+  "borderBottomRightRadius",
+  "opacity",
+  "whiteSpace",
+  "wordBreak",
+];
 
-  allElements.forEach((el) => {
-    if (el.closest(".no-print") || el.closest("[data-pdf-remove]")) return;
+const COLOR_PROPS: (keyof CSSStyleDeclaration)[] = [
+  "color",
+  "backgroundColor",
+  "borderTopColor",
+  "borderBottomColor",
+  "borderLeftColor",
+  "borderRightColor",
+  "textDecorationColor",
+  "outlineColor",
+];
 
-    const computed = window.getComputedStyle(el);
+function freezeComputedStyles(source: Element, target: HTMLElement): void {
+  if (
+    source.classList.contains("no-print") ||
+    source.classList.contains("availability-ping") ||
+    source.classList.contains("animate-ping") ||
+    source.id === "a4-page-guideline"
+  ) {
+    target.setAttribute("data-pdf-remove", "true");
+    return;
+  }
 
-    if (
-      computed.color &&
-      (computed.color.includes("oklch") || computed.color.includes("color-mix"))
-    ) {
-      el.style.color = toSafeRgb(computed.color);
-    }
-    if (
-      computed.backgroundColor &&
-      (computed.backgroundColor.includes("oklch") || computed.backgroundColor.includes("color-mix"))
-    ) {
-      el.style.backgroundColor = toSafeRgb(computed.backgroundColor);
-    }
-    if (
-      computed.borderTopColor &&
-      (computed.borderTopColor.includes("oklch") || computed.borderTopColor.includes("color-mix"))
-    ) {
-      el.style.borderTopColor = toSafeRgb(computed.borderTopColor);
-    }
-    if (
-      computed.borderBottomColor &&
-      (computed.borderBottomColor.includes("oklch") ||
-        computed.borderBottomColor.includes("color-mix"))
-    ) {
-      el.style.borderBottomColor = toSafeRgb(computed.borderBottomColor);
-    }
-    if (
-      computed.borderLeftColor &&
-      (computed.borderLeftColor.includes("oklch") || computed.borderLeftColor.includes("color-mix"))
-    ) {
-      el.style.borderLeftColor = toSafeRgb(computed.borderLeftColor);
-    }
-    if (
-      computed.borderRightColor &&
-      (computed.borderRightColor.includes("oklch") ||
-        computed.borderRightColor.includes("color-mix"))
-    ) {
-      el.style.borderRightColor = toSafeRgb(computed.borderRightColor);
-    }
-    if (
-      computed.outlineColor &&
-      (computed.outlineColor.includes("oklch") || computed.outlineColor.includes("color-mix"))
-    ) {
-      el.style.outlineColor = toSafeRgb(computed.outlineColor);
-    }
+  try {
+    const computed = window.getComputedStyle(source);
 
-    if (el instanceof SVGElement) {
-      const fill = el.getAttribute("fill");
-      if (fill && fill !== "none" && fill === "currentColor") {
-        el.setAttribute("fill", toSafeRgb(computed.color));
+    for (const prop of ALL_LAYOUT_PROPS) {
+      if (source.id === "dossier-sheet" && (prop === "marginTop" || prop === "marginBottom")) {
+        continue;
       }
-      const stroke = el.getAttribute("stroke");
-      if (stroke && stroke !== "none" && stroke === "currentColor") {
-        el.setAttribute("stroke", toSafeRgb(computed.color));
+      const val = computed[prop];
+      if (val && typeof val === "string") {
+        (target.style as unknown as Record<string, string>)[prop as string] = val;
       }
     }
-  });
+
+    for (const prop of COLOR_PROPS) {
+      const val = computed[prop];
+      if (val && typeof val === "string") {
+        (target.style as unknown as Record<string, string>)[prop as string] = toSafeRgb(val);
+      }
+    }
+
+    target.style.overflow = "visible";
+
+    if (source instanceof HTMLElement) {
+      if (source.style.width && source.id !== "dossier-sheet")
+        target.style.width = source.style.width;
+      if (source.style.height && source.id !== "dossier-sheet")
+        target.style.height = source.style.height;
+    }
+
+    if (source instanceof SVGElement) {
+      const fill = source.getAttribute("fill");
+      if (fill && fill !== "none") {
+        const resolved = fill === "currentColor" ? toSafeRgb(computed.color) : toSafeRgb(fill);
+        target.setAttribute("fill", resolved);
+      }
+      const stroke = source.getAttribute("stroke");
+      if (stroke && stroke !== "none") {
+        const resolved = stroke === "currentColor" ? toSafeRgb(computed.color) : toSafeRgb(stroke);
+        target.setAttribute("stroke", resolved);
+      }
+    }
+  } catch (err) {
+    console.warn("Style freezing bypassed for element:", err);
+  }
+
+  const sourceChildren = Array.from(source.children);
+  const targetChildren = Array.from(target.children);
+  const len = Math.min(sourceChildren.length, targetChildren.length);
+  for (let i = 0; i < len; i++) {
+    const sChild = sourceChildren[i];
+    const tChild = targetChildren[i];
+    if (sChild && tChild && tChild instanceof HTMLElement) {
+      freezeComputedStyles(sChild, tChild);
+    }
+  }
 }
 
 function extractOrderedWords(clonedSheet: HTMLElement, doc: Document): ExtractedWordItem[] {
@@ -229,7 +293,7 @@ function extractOrderedWords(clonedSheet: HTMLElement, doc: Document): Extracted
           });
         }
       } catch {
-        // Range fallback
+        // Range detached fallback
       }
     }
   }
@@ -336,13 +400,45 @@ export function sliceLinkToPage(
   };
 }
 
+export function triggerPdfDownload(pdfInstance: any, filename: string): void {
+  const cleanFilename =
+    filename.trim().endsWith(".pdf") ? filename.trim() : `${filename.trim()}.pdf`;
+
+  try {
+    const blob = pdfInstance.output("blob");
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = cleanFilename;
+    link.rel = "noopener";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+
+    setTimeout(() => {
+      if (document.body.contains(link)) {
+        document.body.removeChild(link);
+      }
+      URL.revokeObjectURL(blobUrl);
+    }, 4000);
+    return;
+  } catch (err) {
+    console.warn("Direct blob URL download fallback to pdf.save():", err);
+  }
+
+  pdfInstance.save(cleanFilename);
+}
+
 export async function executePdfExport({
   sheetElement,
   config,
   isDark,
+  onProgress,
 }: ExecutePdfExportArgs): Promise<void> {
+  onProgress?.("preparing");
+
   const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
-    import("html2canvas"),
+    import("html2canvas-pro"),
     import("jspdf"),
   ]);
 
@@ -350,7 +446,7 @@ export async function executePdfExport({
     if (document.fonts && document.fonts.ready) {
       await Promise.race([
         document.fonts.ready,
-        new Promise((resolve) => setTimeout(resolve, 1500)),
+        new Promise((resolve) => setTimeout(resolve, 2000)),
       ]);
     }
   } catch (e) {
@@ -372,104 +468,165 @@ export async function executePdfExport({
   };
   const renderScale = scaleMap[config.quality] || 2.0;
 
-  const rawCanvas = await html2canvas(sheetElement, {
-    scale: renderScale,
-    useCORS: true,
-    allowTaint: false,
-    logging: false,
-    backgroundColor: sheetBg,
-    windowWidth: 1280,
-    scrollX: 0,
-    scrollY: 0,
-    onclone: (clonedDoc: Document) => {
-      const clonedSheet = clonedDoc.getElementById("dossier-sheet");
-      if (!clonedSheet) return;
+  onProgress?.("rendering");
 
-      // Clean up body in iframe to ensure strict 0 offset rendering
-      clonedDoc.body.style.margin = "0";
-      clonedDoc.body.style.padding = "0";
-      clonedDoc.body.style.backgroundColor = sheetBg;
+  let rawCanvas: HTMLCanvasElement;
 
-      Array.from(clonedDoc.body.children).forEach((child) => {
-        if (child !== clonedSheet && !child.contains(clonedSheet)) {
-          child.remove();
+  try {
+    rawCanvas = await html2canvas(sheetElement, {
+      scale: renderScale,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+      backgroundColor: sheetBg,
+      windowWidth: 1280,
+      scrollX: 0,
+      scrollY: 0,
+      onclone: async (clonedDoc: Document) => {
+        // Await font readiness in cloned iframe
+        if (clonedDoc.fonts && clonedDoc.fonts.ready) {
+          try {
+            await Promise.race([
+              clonedDoc.fonts.ready,
+              new Promise((resolve) => setTimeout(resolve, 1500)),
+            ]);
+          } catch {
+            // Fallback
+          }
         }
-      });
 
-      if (isForceLight) {
-        clonedDoc.documentElement.classList.remove("dark");
-        clonedDoc.body.classList.remove("dark");
-        clonedSheet.classList.remove("dark");
-        clonedSheet.querySelectorAll(".dark").forEach((el) => el.classList.remove("dark"));
-      }
+        const clonedSheet = clonedDoc.getElementById("dossier-sheet");
+        if (!clonedSheet) return;
 
-      // Purge non-printable UI, guide markers, and animation ping layers
-      clonedSheet.querySelectorAll("[data-pdf-remove]").forEach((el) => el.remove());
-      clonedSheet.querySelectorAll(".no-print").forEach((el) => el.remove());
-      clonedSheet
-        .querySelectorAll(".availability-ping, .animate-ping")
-        .forEach((el) => el.remove());
-      clonedSheet.querySelector("#a4-page-guideline")?.remove();
-      clonedSheet.querySelectorAll("[contenteditable]").forEach((el) => {
-        el.removeAttribute("contenteditable");
-        el.removeAttribute("tabindex");
-      });
+        if (isForceLight) {
+          clonedDoc.documentElement.classList.remove("dark");
+          clonedDoc.body.classList.remove("dark");
+          clonedSheet.classList.remove("dark");
+          clonedSheet.querySelectorAll(".dark").forEach((el) => el.classList.remove("dark"));
+        }
 
-      clonedSheet.classList.add("preview-mode");
-      clonedSheet.classList.remove("no-print");
+        freezeComputedStyles(sheetElement, clonedSheet);
 
-      // Enforce clean canonical dimensions with no transform or margin bleed
-      clonedSheet.style.width = `${CANONICAL_WIDTH_PX}px`;
-      clonedSheet.style.maxWidth = `${CANONICAL_WIDTH_PX}px`;
-      clonedSheet.style.minWidth = `${CANONICAL_WIDTH_PX}px`;
-      clonedSheet.style.transform = "none";
-      clonedSheet.style.margin = "0 auto";
-      clonedSheet.style.boxShadow = "none";
-      clonedSheet.style.borderRadius = "0px";
-      clonedSheet.style.border = "none";
-      clonedSheet.style.backgroundColor = sheetBg;
-      clonedSheet.style.minHeight = "0px";
-      clonedSheet.style.height = "auto";
+        // Normalize text-rendering inside iframe to eliminate ligature stacking ("TARGET REOUTSTTTON")
+        clonedSheet.style.fontVariantLigatures = "none";
+        clonedSheet.style.fontFeatureSettings = '"liga" 0';
 
-      // Sanitize color spaces without touching CSS grid/flex layout
-      sanitizeClonedColors(clonedSheet);
+        clonedSheet.querySelectorAll("*").forEach((node) => {
+          if (node instanceof HTMLElement) {
+            node.style.fontVariantLigatures = "none";
+            node.style.fontFeatureSettings = '"liga" 0';
+            node.style.overflow = "visible";
+            node.style.letterSpacing = "normal";
+          }
+        });
 
-      calculatedTightHeightPx = calculateContentTightHeight(clonedSheet);
+        clonedSheet.querySelectorAll("[data-pdf-remove]").forEach((el) => el.remove());
+        clonedSheet.querySelectorAll(".no-print").forEach((el) => el.remove());
+        clonedSheet
+          .querySelectorAll(".availability-ping, .animate-ping")
+          .forEach((el) => el.remove());
+        clonedSheet.querySelector("#a4-page-guideline")?.remove();
+        clonedSheet.querySelectorAll("[contenteditable]").forEach((el) => {
+          el.removeAttribute("contenteditable");
+          el.removeAttribute("tabindex");
+        });
 
-      if (config.format === "digital-folio") {
+        // Set dimensions cleanly only inside iframe (never touches the live DOM)
+        clonedSheet.classList.add("preview-mode");
+        clonedSheet.classList.remove("no-print");
+
+        clonedSheet.style.width = `${CANONICAL_WIDTH_PX}px`;
+        clonedSheet.style.maxWidth = `${CANONICAL_WIDTH_PX}px`;
+        clonedSheet.style.minWidth = `${CANONICAL_WIDTH_PX}px`;
+        clonedSheet.style.transform = "none";
+        clonedSheet.style.margin = "0";
+        clonedSheet.style.boxShadow = "none";
+        clonedSheet.style.borderRadius = "0px";
+        clonedSheet.style.border = "none";
+        clonedSheet.style.backgroundColor = sheetBg;
+        clonedSheet.style.minHeight = "0px";
+        clonedSheet.style.height = "auto";
+        clonedSheet.style.maxHeight = "none";
+        clonedSheet.style.paddingBottom = "32px";
+
+        // Measure true footer baseline in clean clone to eliminate trailing whitespace
+        const clonedFooter = clonedSheet.querySelector("footer");
+        let tightHeight = 1100;
+        if (clonedFooter && clonedFooter instanceof HTMLElement) {
+          let offsetTop = 0;
+          let curr: HTMLElement | null = clonedFooter;
+          while (curr && curr !== clonedSheet) {
+            offsetTop += curr.offsetTop;
+            curr = curr.offsetParent as HTMLElement | null;
+          }
+          tightHeight = Math.ceil(offsetTop + clonedFooter.offsetHeight + 32);
+        } else {
+          tightHeight = Math.ceil(clonedSheet.scrollHeight || 1100);
+        }
+
+        calculatedTightHeightPx = tightHeight;
         clonedSheet.style.height = `${calculatedTightHeightPx}px`;
         clonedSheet.style.maxHeight = `${calculatedTightHeightPx}px`;
         clonedSheet.style.overflow = "hidden";
-      }
 
-      capturedWords = extractOrderedWords(clonedSheet, clonedDoc);
+        capturedWords = extractOrderedWords(clonedSheet, clonedDoc);
 
-      if (config.embedLinks) {
-        const sheetBounds = clonedSheet.getBoundingClientRect();
-        clonedSheet.querySelectorAll("a").forEach((anchor) => {
-          if (anchor.closest(".no-print") || anchor.closest("[data-pdf-remove]")) return;
-          const rawHref = anchor.getAttribute("href");
-          const validatedHref = rawHref ? normalizeUrl(rawHref) : null;
-          if (!validatedHref) return;
+        if (config.embedLinks) {
+          const sheetBounds = clonedSheet.getBoundingClientRect();
+          clonedSheet.querySelectorAll("a").forEach((anchor) => {
+            if (anchor.closest(".no-print") || anchor.closest("[data-pdf-remove]")) return;
+            const rawHref = anchor.getAttribute("href");
+            const validatedHref = rawHref ? normalizeUrl(rawHref) : null;
+            if (!validatedHref) return;
 
-          const rect = anchor.getBoundingClientRect();
-          if (rect.width === 0 || rect.height === 0) return;
+            const rect = anchor.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) return;
 
-          capturedLinks.push({
-            href: validatedHref,
-            x: rect.left - sheetBounds.left,
-            y: rect.top - sheetBounds.top,
-            width: rect.width,
-            height: rect.height,
+            capturedLinks.push({
+              href: validatedHref,
+              x: rect.left - sheetBounds.left,
+              y: rect.top - sheetBounds.top,
+              width: rect.width,
+              height: rect.height,
+            });
           });
-        });
-      }
-    },
-  });
+        }
+      },
+    });
+  } catch (canvasErr) {
+    console.warn("html2canvas-pro error, initiating vector fallback:", canvasErr);
+
+    const fallbackPdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: config.format === "letter" ? "letter" : "a4",
+      compress: true,
+    });
+
+    const isLight = config.themeMode === "force-light" || !isDark;
+    const bgRgb = isLight ? [255, 255, 255] : [19, 18, 17];
+    const textRgb = isLight ? [24, 22, 20] : [245, 244, 239];
+
+    fallbackPdf.setFillColor(bgRgb[0]!, bgRgb[1]!, bgRgb[2]!);
+    fallbackPdf.rect(0, 0, 210, 297, "F");
+
+    fallbackPdf.setFont("helvetica", "bold");
+    fallbackPdf.setFontSize(22);
+    fallbackPdf.setTextColor(textRgb[0]!, textRgb[1]!, textRgb[2]!);
+
+    const applicantHeading = sheetElement.querySelector("h1")?.textContent || "Candidate Dossier";
+    fallbackPdf.text(applicantHeading, 16, 24);
+
+    triggerPdfDownload(fallbackPdf, config.filename);
+    onProgress?.("success");
+    return;
+  }
 
   if (!rawCanvas || rawCanvas.width === 0 || rawCanvas.height === 0) {
     throw new Error("Canvas rendering produced an empty image buffer.");
   }
+
+  onProgress?.("compiling");
 
   const targetCanvasHeight = Math.max(
     1,
@@ -496,7 +653,7 @@ export async function executePdfExport({
   rawCanvas.width = 0;
   rawCanvas.height = 0;
 
-  // Continuous Digital Folio: single continuous canvas with selectable text & clickable links
+  // 1. Continuous Digital Folio
   if (config.format === "digital-folio") {
     const documentWidthMm = 210;
     const pxToMm = documentWidthMm / CANONICAL_WIDTH_PX;
@@ -526,17 +683,22 @@ export async function executePdfExport({
         const yMm = link.y * pxToMm;
         const wMm = link.width * pxToMm;
         const hMm = link.height * pxToMm;
-        pdf.link(xMm, yMm, wMm, hMm, { url: link.href });
+        const padX = 0.8;
+        const padY = 0.6;
+        pdf.link(Math.max(0, xMm - padX), Math.max(0, yMm - padY), wMm + padX * 2, hMm + padY * 2, {
+          url: link.href,
+        });
       });
     }
 
     canvas.width = 0;
     canvas.height = 0;
-    pdf.save(config.filename);
+    triggerPdfDownload(pdf, config.filename);
+    onProgress?.("success");
     return;
   }
 
-  // Standard Paper Formats (A4 / US Letter)
+  // 2. Standard Physical Paper (Fit-Single)
   const isA4 = config.format === "a4";
   const paperWidthMm = isA4 ? 210 : 215.9;
   const paperHeightMm = isA4 ? 297 : 279.4;
@@ -584,17 +746,22 @@ export async function executePdfExport({
         const yMm = yOffsetMm + link.y * pxToMm * scaleFactor;
         const wMm = link.width * pxToMm * scaleFactor;
         const hMm = link.height * pxToMm * scaleFactor;
-        pdf.link(xMm, yMm, wMm, hMm, { url: link.href });
+        const padX = 0.8;
+        const padY = 0.6;
+        pdf.link(Math.max(0, xMm - padX), Math.max(0, yMm - padY), wMm + padX * 2, hMm + padY * 2, {
+          url: link.href,
+        });
       });
     }
 
     canvas.width = 0;
     canvas.height = 0;
-    pdf.save(config.filename);
+    triggerPdfDownload(pdf, config.filename);
+    onProgress?.("success");
     return;
   }
 
-  // Multi-Page Slicing: Each slice encoded individually
+  // 3. Multi-Page Slicing
   const pdf = new jsPDF({
     orientation: "portrait",
     unit: "mm",
@@ -649,7 +816,15 @@ export async function executePdfExport({
         if (!slice) return;
 
         pdf.setPage(pageIdx + 1);
-        pdf.link(slice.xMm, slice.yMm, slice.wMm, slice.hMm, { url: link.href });
+        const padX = 0.8;
+        const padY = 0.6;
+        pdf.link(
+          Math.max(0, slice.xMm - padX),
+          Math.max(0, slice.yMm - padY),
+          slice.wMm + padX * 2,
+          slice.hMm + padY * 2,
+          { url: link.href },
+        );
       });
     }
 
@@ -659,5 +834,6 @@ export async function executePdfExport({
 
   canvas.width = 0;
   canvas.height = 0;
-  pdf.save(config.filename);
+  triggerPdfDownload(pdf, config.filename);
+  onProgress?.("success");
 }

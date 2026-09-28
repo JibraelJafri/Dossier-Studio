@@ -1,9 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import {
-  PdfExportConfig,
-  TypographyStyle,
-  ViewPreset,
-} from "./types.ts";
+import { PdfExportConfig, TypographyStyle, ViewPreset } from "./types.ts";
 import { formatDossierPlainText } from "./utils/markdown.ts";
 import { Toolbar } from "./components/Toolbar.tsx";
 import { Masthead } from "./components/Masthead.tsx";
@@ -48,7 +44,9 @@ export default function App() {
   const [isAiModalOpen, setIsAiModalOpen] = useState<boolean>(false);
   const [isPdfModalOpen, setIsPdfModalOpen] = useState<boolean>(false);
   const [isExportingPdf, setIsExportingPdf] = useState<boolean>(false);
-  const [copyFeedback, setCopyFeedback] = useState<"copied" | "denied" | "unsupported" | null>(null);
+  const [copyFeedback, setCopyFeedback] = useState<"copied" | "denied" | "unsupported" | null>(
+    null,
+  );
 
   const [showA4Guide, setShowA4Guide] = useState<boolean>(() => {
     const saved = safeStorage.getItem("studio_dossier_show_a4_guide");
@@ -170,20 +168,19 @@ export default function App() {
   };
 
   // Dynamic code-split execution: loads jsPDF and html2canvas on-demand inside executePdfExport
-  const handleConfirmExport = async (config: PdfExportConfig) => {
+  const handleConfirmExport = async (
+    config: PdfExportConfig,
+    onProgress?: (stage: "preparing" | "rendering" | "compiling" | "success") => void,
+  ) => {
     const sheet = sheetRef.current;
     if (!sheet) return;
 
-    setIsExportingPdf(true);
-    try {
-      await executePdfExport({
-        sheetElement: sheet,
-        config,
-        isDark,
-      });
-    } finally {
-      setIsExportingPdf(false);
-    }
+    await executePdfExport({
+      sheetElement: sheet,
+      config,
+      isDark,
+      onProgress,
+    });
   };
 
   const hasLedger = data.visibility.recipientBlock;
@@ -284,9 +281,7 @@ export default function App() {
               <div className="pointer-events-auto mx-2 sm:mx-3 px-3 py-1 rounded-full text-[10.5px] font-mono font-medium shadow-md flex items-center gap-2 whitespace-nowrap bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted)">
                 <span>✂ Physical Paper Reference (A4: 297mm)</span>
                 <span className="opacity-40">·</span>
-                <span className="text-(--accent-base)">
-                  Digital Folio PDF Exports Continuous
-                </span>
+                <span className="text-(--accent-base)">Digital Folio PDF Exports Continuous</span>
               </div>
               <div className="h-0 flex-1 border-t-2 border-dashed border-(--accent-border)" />
             </div>
@@ -320,7 +315,7 @@ export default function App() {
         />
 
         {/* SEAM 1: Header to Ledger or Header to Statement */}
-        {hasLedger ? (
+        {hasLedger ?
           <>
             <InterSectionGap
               seamKey="header-ledger"
@@ -353,8 +348,7 @@ export default function App() {
               disabled={isPreviewMode}
             />
           </>
-        ) : (
-          <InterSectionGap
+        : <InterSectionGap
             seamKey="header-statement"
             gap={getSeamGap("header-statement")}
             onChangeGap={updateSeamGap}
@@ -363,7 +357,7 @@ export default function App() {
             label="Header to Statement"
             disabled={isPreviewMode}
           />
-        )}
+        }
 
         {/* 2. STATEMENT OF INTENT */}
         <StatementSection
@@ -428,11 +422,10 @@ export default function App() {
           onResetGap={resetSeamGap}
           isCustom={spacing.customGaps?.[postStatementSeamKey] !== undefined}
           label={
-            hasMetrics
-              ? "Statement to Metrics"
-              : hasTaxonomy
-              ? "Statement to Taxonomy"
-              : "Statement to Signoff"
+            hasMetrics ? "Statement to Metrics"
+            : hasTaxonomy ?
+              "Statement to Taxonomy"
+            : "Statement to Signoff"
           }
           disabled={isPreviewMode}
         />

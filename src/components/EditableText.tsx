@@ -141,19 +141,19 @@ export const EditableText: React.FC<EditableTextProps> = ({
 
     if (format === "bold") {
       replacement =
-        selectedText.startsWith("**") && selectedText.endsWith("**") && selectedText.length >= 4
-          ? selectedText.slice(2, -2)
-          : `**${selectedText || "bold text"}**`;
+        selectedText.startsWith("**") && selectedText.endsWith("**") && selectedText.length >= 4 ?
+          selectedText.slice(2, -2)
+        : `**${selectedText || "bold text"}**`;
     } else if (format === "italic") {
       replacement =
-        selectedText.startsWith("*") && selectedText.endsWith("*") && selectedText.length >= 2
-          ? selectedText.slice(1, -1)
-          : `*${selectedText || "italic text"}*`;
+        selectedText.startsWith("*") && selectedText.endsWith("*") && selectedText.length >= 2 ?
+          selectedText.slice(1, -1)
+        : `*${selectedText || "italic text"}*`;
     } else if (format === "code") {
       replacement =
-        selectedText.startsWith("`") && selectedText.endsWith("`") && selectedText.length >= 2
-          ? selectedText.slice(1, -1)
-          : `\`${selectedText || "code"}\``;
+        selectedText.startsWith("`") && selectedText.endsWith("`") && selectedText.length >= 2 ?
+          selectedText.slice(1, -1)
+        : `\`${selectedText || "code"}\``;
     }
 
     range.deleteContents();
@@ -463,7 +463,11 @@ export const EditableText: React.FC<EditableTextProps> = ({
     ref: elementRef,
     contentEditable: false,
     suppressContentEditableWarning: true,
-    tabIndex: disabled ? (isLink ? 0 : -1) : 0,
+    tabIndex:
+      disabled ?
+        isLink ? 0
+        : -1
+      : 0,
     title: !disabled ? "Click or press Enter to edit" : undefined,
     "aria-describedby": !disabled ? "editorial-keyboard-hint" : undefined,
     "aria-label": value && value.trim() ? undefined : placeholder,
@@ -491,19 +495,17 @@ export const EditableText: React.FC<EditableTextProps> = ({
   };
 
   if (isLink && href) {
-    if (disabled) {
-      elementProps.href = href;
-      if (target) elementProps.target = target;
-      if (target === "_blank") elementProps.rel = "noopener noreferrer";
-    }
+    elementProps.href = href;
+    if (target) elementProps.target = target;
+    if (target === "_blank") elementProps.rel = "noopener noreferrer";
   }
 
   if (allowMarkdown) {
     elementProps.dangerouslySetInnerHTML = {
       __html:
-        value && value.trim()
-          ? parseMarkdown(value)
-          : `<span class="opacity-40 italic">${escapeHtml(placeholder)}</span>`,
+        value && value.trim() ?
+          parseMarkdown(value)
+        : `<span class="opacity-40 italic">${escapeHtml(placeholder)}</span>`,
     };
     return React.createElement(Component, elementProps);
   }
