@@ -16,7 +16,7 @@ interface ExtractedWordItem {
   fontSizePt: number;
 }
 
-interface ExtractedLineItem {
+export interface ExtractedLineItem {
   text: string;
   xMm: number;
   yMm: number;
@@ -25,7 +25,7 @@ interface ExtractedLineItem {
   baselineOffsetPx: number;
 }
 
-interface ExtractedLinkItem {
+export interface ExtractedLinkItem {
   href: string;
   x: number;
   y: number;
@@ -72,9 +72,8 @@ export function cleanTextForPdf(text: string): string {
 
 let conversionCanvas: HTMLCanvasElement | null = null;
 let conversionCtx: CanvasRenderingContext2D | null = null;
-const SENTINEL_COLOR = "rgba(1, 2, 3, 0.5)";
 
-function toSafeRgb(colorStr: string): string {
+export function toSafeRgb(colorStr: string): string {
   if (
     !colorStr ||
     colorStr === "transparent" ||
@@ -88,138 +87,92 @@ function toSafeRgb(colorStr: string): string {
   if (/^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(colorStr)) return colorStr;
   if (/^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+(\s*,\s*[\d.]+\s*)?\)$/i.test(colorStr)) return colorStr;
 
-  if (typeof document !== "undefined" && !conversionCanvas) {
-    conversionCanvas = document.createElement("canvas");
-    conversionCanvas.width = 1;
-    conversionCanvas.height = 1;
-    conversionCtx = conversionCanvas.getContext("2d", { willReadFrequently: true });
-  }
-
-  try {
+  if (typeof document !== "undefined") {
+    if (!conversionCanvas) {
+      conversionCanvas = document.createElement("canvas");
+      conversionCanvas.width = 1;
+      conversionCanvas.height = 1;
+      conversionCtx = conversionCanvas.getContext("2d", { willReadFrequently: true });
+    }
     if (conversionCtx) {
-      conversionCtx.fillStyle = SENTINEL_COLOR;
-      conversionCtx.fillStyle = colorStr;
-      const computed = conversionCtx.fillStyle;
-      if (computed && computed !== SENTINEL_COLOR) {
-        return computed;
+      try {
+        conversionCtx.fillStyle = "#000000";
+        conversionCtx.fillStyle = colorStr;
+        const computed = conversionCtx.fillStyle;
+        if (computed) return computed;
+      } catch {
+        // Fallback
       }
     }
-  } catch {
-    // Context fallback
-  }
-
-  if (colorStr.includes("oklab") || colorStr.includes("oklch") || colorStr.includes("color-mix")) {
-    return "rgba(0, 0, 0, 0)";
   }
 
   return colorStr;
 }
 
-const CRITICAL_LAYOUT_PROPS: (keyof CSSStyleDeclaration)[] = [
-  "display",
-  "boxSizing",
-  "position",
-  "flexDirection",
-  "flexWrap",
-  "alignItems",
-  "justifyContent",
-  "gap",
-  "rowGap",
-  "columnGap",
-  "gridTemplateColumns",
-  "gridTemplateRows",
-  "fontFamily",
-  "fontSize",
-  "fontWeight",
-  "fontStyle",
-  "lineHeight",
-  "letterSpacing",
-  "textAlign",
-  "textTransform",
-  "borderTopWidth",
-  "borderBottomWidth",
-  "borderLeftWidth",
-  "borderRightWidth",
-  "borderTopStyle",
-  "borderBottomStyle",
-  "borderLeftStyle",
-  "borderRightStyle",
-  "borderTopLeftRadius",
-  "borderTopRightRadius",
-  "borderBottomLeftRadius",
-  "borderBottomRightRadius",
-  "opacity",
-  "overflow",
-  "whiteSpace",
-  "wordBreak",
-];
+function sanitizeClonedColors(root: HTMLElement): void {
+  const allElements = [root, ...Array.from(root.querySelectorAll("*"))] as HTMLElement[];
 
-const COLOR_STYLE_PROPS: (keyof CSSStyleDeclaration)[] = [
-  "color",
-  "backgroundColor",
-  "borderTopColor",
-  "borderBottomColor",
-  "borderLeftColor",
-  "borderRightColor",
-  "textDecorationColor",
-  "outlineColor",
-];
+  allElements.forEach((el) => {
+    if (el.closest(".no-print") || el.closest("[data-pdf-remove]")) return;
 
-function freezeComputedStyles(source: Element, target: HTMLElement): void {
-  if (source.classList.contains("no-print") || source.id === "a4-page-guideline") {
-    target.setAttribute("data-pdf-remove", "true");
-    return;
-  }
+    const computed = window.getComputedStyle(el);
 
-  const computed = window.getComputedStyle(source);
-
-  for (const prop of CRITICAL_LAYOUT_PROPS) {
-    const val = computed[prop];
-    if (val && typeof val === "string") {
-      (target.style as unknown as Record<string, string>)[prop as string] = val;
+    if (
+      computed.color &&
+      (computed.color.includes("oklch") || computed.color.includes("color-mix"))
+    ) {
+      el.style.color = toSafeRgb(computed.color);
     }
-  }
-
-  for (const prop of COLOR_STYLE_PROPS) {
-    const val = computed[prop];
-    if (val && typeof val === "string") {
-      (target.style as unknown as Record<string, string>)[prop as string] = toSafeRgb(val);
+    if (
+      computed.backgroundColor &&
+      (computed.backgroundColor.includes("oklch") || computed.backgroundColor.includes("color-mix"))
+    ) {
+      el.style.backgroundColor = toSafeRgb(computed.backgroundColor);
     }
-  }
-
-  if (source instanceof HTMLElement) {
-    if (source.style.width) target.style.width = source.style.width;
-    if (source.style.height) target.style.height = source.style.height;
-    if (source.style.marginTop) target.style.marginTop = source.style.marginTop;
-    if (source.style.marginBottom) target.style.marginBottom = source.style.marginBottom;
-    if (source.style.paddingTop) target.style.paddingTop = source.style.paddingTop;
-    if (source.style.paddingBottom) target.style.paddingBottom = source.style.paddingBottom;
-    if (source.style.paddingLeft) target.style.paddingLeft = source.style.paddingLeft;
-    if (source.style.paddingRight) target.style.paddingRight = source.style.paddingRight;
-  }
-
-  if (source instanceof SVGElement) {
-    const fill = source.getAttribute("fill");
-    if (fill && fill !== "none") {
-      const resolved = fill === "currentColor" ? toSafeRgb(computed.color) : toSafeRgb(fill);
-      target.setAttribute("fill", resolved);
+    if (
+      computed.borderTopColor &&
+      (computed.borderTopColor.includes("oklch") || computed.borderTopColor.includes("color-mix"))
+    ) {
+      el.style.borderTopColor = toSafeRgb(computed.borderTopColor);
     }
-    const stroke = source.getAttribute("stroke");
-    if (stroke && stroke !== "none") {
-      const resolved = stroke === "currentColor" ? toSafeRgb(computed.color) : toSafeRgb(stroke);
-      target.setAttribute("stroke", resolved);
+    if (
+      computed.borderBottomColor &&
+      (computed.borderBottomColor.includes("oklch") ||
+        computed.borderBottomColor.includes("color-mix"))
+    ) {
+      el.style.borderBottomColor = toSafeRgb(computed.borderBottomColor);
     }
-  }
+    if (
+      computed.borderLeftColor &&
+      (computed.borderLeftColor.includes("oklch") || computed.borderLeftColor.includes("color-mix"))
+    ) {
+      el.style.borderLeftColor = toSafeRgb(computed.borderLeftColor);
+    }
+    if (
+      computed.borderRightColor &&
+      (computed.borderRightColor.includes("oklch") ||
+        computed.borderRightColor.includes("color-mix"))
+    ) {
+      el.style.borderRightColor = toSafeRgb(computed.borderRightColor);
+    }
+    if (
+      computed.outlineColor &&
+      (computed.outlineColor.includes("oklch") || computed.outlineColor.includes("color-mix"))
+    ) {
+      el.style.outlineColor = toSafeRgb(computed.outlineColor);
+    }
 
-  const sourceChildren = Array.from(source.children);
-  const targetChildren = Array.from(target.children);
-  for (let i = 0; i < sourceChildren.length; i++) {
-    const sChild = sourceChildren[i];
-    const tChild = targetChildren[i];
-    if (sChild && tChild) {
-      freezeComputedStyles(sChild, tChild as HTMLElement);
+    if (el instanceof SVGElement) {
+      const fill = el.getAttribute("fill");
+      if (fill && fill !== "none" && fill === "currentColor") {
+        el.setAttribute("fill", toSafeRgb(computed.color));
+      }
+      const stroke = el.getAttribute("stroke");
+      if (stroke && stroke !== "none" && stroke === "currentColor") {
+        el.setAttribute("stroke", toSafeRgb(computed.color));
+      }
     }
-  }
+  });
 }
 
 function extractOrderedWords(clonedSheet: HTMLElement, doc: Document): ExtractedWordItem[] {
@@ -276,7 +229,7 @@ function extractOrderedWords(clonedSheet: HTMLElement, doc: Document): Extracted
           });
         }
       } catch {
-        // Range detached fallback
+        // Range fallback
       }
     }
   }
@@ -432,6 +385,17 @@ export async function executePdfExport({
       const clonedSheet = clonedDoc.getElementById("dossier-sheet");
       if (!clonedSheet) return;
 
+      // Clean up body in iframe to ensure strict 0 offset rendering
+      clonedDoc.body.style.margin = "0";
+      clonedDoc.body.style.padding = "0";
+      clonedDoc.body.style.backgroundColor = sheetBg;
+
+      Array.from(clonedDoc.body.children).forEach((child) => {
+        if (child !== clonedSheet && !child.contains(clonedSheet)) {
+          child.remove();
+        }
+      });
+
       if (isForceLight) {
         clonedDoc.documentElement.classList.remove("dark");
         clonedDoc.body.classList.remove("dark");
@@ -439,10 +403,12 @@ export async function executePdfExport({
         clonedSheet.querySelectorAll(".dark").forEach((el) => el.classList.remove("dark"));
       }
 
-      freezeComputedStyles(sheetElement, clonedSheet);
-
+      // Purge non-printable UI, guide markers, and animation ping layers
       clonedSheet.querySelectorAll("[data-pdf-remove]").forEach((el) => el.remove());
       clonedSheet.querySelectorAll(".no-print").forEach((el) => el.remove());
+      clonedSheet
+        .querySelectorAll(".availability-ping, .animate-ping")
+        .forEach((el) => el.remove());
       clonedSheet.querySelector("#a4-page-guideline")?.remove();
       clonedSheet.querySelectorAll("[contenteditable]").forEach((el) => {
         el.removeAttribute("contenteditable");
@@ -451,17 +417,22 @@ export async function executePdfExport({
 
       clonedSheet.classList.add("preview-mode");
       clonedSheet.classList.remove("no-print");
+
+      // Enforce clean canonical dimensions with no transform or margin bleed
       clonedSheet.style.width = `${CANONICAL_WIDTH_PX}px`;
       clonedSheet.style.maxWidth = `${CANONICAL_WIDTH_PX}px`;
       clonedSheet.style.minWidth = `${CANONICAL_WIDTH_PX}px`;
       clonedSheet.style.transform = "none";
-      clonedSheet.style.margin = "0";
+      clonedSheet.style.margin = "0 auto";
       clonedSheet.style.boxShadow = "none";
       clonedSheet.style.borderRadius = "0px";
       clonedSheet.style.border = "none";
       clonedSheet.style.backgroundColor = sheetBg;
       clonedSheet.style.minHeight = "0px";
       clonedSheet.style.height = "auto";
+
+      // Sanitize color spaces without touching CSS grid/flex layout
+      sanitizeClonedColors(clonedSheet);
 
       calculatedTightHeightPx = calculateContentTightHeight(clonedSheet);
 
@@ -525,7 +496,7 @@ export async function executePdfExport({
   rawCanvas.width = 0;
   rawCanvas.height = 0;
 
-  // Continuous Digital Folio: encode full canvas only when needed
+  // Continuous Digital Folio: single continuous canvas with selectable text & clickable links
   if (config.format === "digital-folio") {
     const documentWidthMm = 210;
     const pxToMm = documentWidthMm / CANONICAL_WIDTH_PX;
@@ -623,7 +594,7 @@ export async function executePdfExport({
     return;
   }
 
-  // Multi-Page Slicing: Bypasses full canvas encoding; encodes each slice individually
+  // Multi-Page Slicing: Each slice encoded individually
   const pdf = new jsPDF({
     orientation: "portrait",
     unit: "mm",

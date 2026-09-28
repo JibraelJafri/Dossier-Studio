@@ -36,9 +36,9 @@ export const Masthead: React.FC<MastheadProps> = ({
 
   return (
     <header className="pt-1 transition-colors duration-200">
-      <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 lg:gap-8">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 lg:gap-8">
         {/* Left: Applicant Identity */}
-        <div className="flex-1 min-w-0 space-y-3">
+        <div className="flex-1 min-w-0 space-y-2 sm:space-y-3">
           {/* Header Kicker */}
           {showHeaderKicker && (
             <div className="group/kicker relative inline-flex items-center">
@@ -83,8 +83,8 @@ export const Masthead: React.FC<MastheadProps> = ({
               disabled={disabled}
               className={
                 isEditorial ?
-                  "font-serif text-4xl sm:text-5xl lg:text-[50px] font-normal tracking-tight text-[var(--text-main)] leading-none block"
-                : "font-sans text-3xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-[var(--text-main)] leading-none block"
+                  "font-serif text-4xl sm:text-5xl lg:text-[48px] font-normal tracking-tight text-[var(--text-main)] leading-[1.08] block"
+                : "font-sans text-3xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-[var(--text-main)] leading-[1.1] block"
               }
             />
 
@@ -95,8 +95,8 @@ export const Masthead: React.FC<MastheadProps> = ({
               disabled={disabled}
               className={
                 isEditorial ?
-                  "font-serif italic text-lg sm:text-[21px] text-[var(--accent-base)] tracking-normal pt-2 font-medium block"
-                : "font-sans text-base sm:text-[18px] font-semibold text-[var(--accent-base)] tracking-tight pt-1.5 block"
+                  "font-serif italic text-lg sm:text-[21px] text-[var(--accent-base)] tracking-normal mt-2.5 sm:mt-3 font-medium block"
+                : "font-sans text-base sm:text-[18px] font-semibold text-[var(--accent-base)] tracking-tight mt-2.5 sm:mt-3 block"
               }
             />
           </div>
@@ -143,9 +143,12 @@ export const Masthead: React.FC<MastheadProps> = ({
               <EditableText
                 as="a"
                 href={
-                  applicant.artstation.startsWith("http://") || applicant.artstation.startsWith("https://")
-                    ? applicant.artstation
-                    : `https://${applicant.artstation}`
+                  (
+                    applicant.artstation.startsWith("http://") ||
+                    applicant.artstation.startsWith("https://")
+                  ) ?
+                    applicant.artstation
+                  : `https://${applicant.artstation}`
                 }
                 target="_blank"
                 value={applicant.artstation}
@@ -161,9 +164,12 @@ export const Masthead: React.FC<MastheadProps> = ({
               <EditableText
                 as="a"
                 href={
-                  applicant.website.startsWith("http://") || applicant.website.startsWith("https://")
-                    ? applicant.website
-                    : `https://${applicant.website}`
+                  (
+                    applicant.website.startsWith("http://") ||
+                    applicant.website.startsWith("https://")
+                  ) ?
+                    applicant.website
+                  : `https://${applicant.website}`
                 }
                 target="_blank"
                 value={applicant.website}
@@ -178,7 +184,7 @@ export const Masthead: React.FC<MastheadProps> = ({
         {/* Right: Target Capsule */}
         {showTargetCard && (
           <aside
-            className="group/target relative bg-[var(--bg-subtle)]/80 dark:bg-[var(--bg-subtle)]/60 border border-[var(--border-sheet)]/80 dark:border-[var(--border-subtle)] rounded-2xl p-4.5 sm:p-5 text-xs w-full md:w-[340px] shrink-0 space-y-3.5 shadow-2xs transition-all duration-200"
+            className="group/target relative bg-[var(--bg-subtle)]/80 dark:bg-[var(--bg-subtle)]/60 border border-[var(--border-sheet)]/80 dark:border-[var(--border-subtle)] rounded-2xl p-4 sm:p-5 text-xs w-full max-w-[340px] md:w-[340px] shrink-0 space-y-3.5 shadow-2xs transition-all duration-200"
             aria-label="Target Requisition Metadata"
           >
             {!disabled && (
@@ -187,7 +193,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                   type="button"
                   onClick={onToggleTargetCard}
                   className="p-1.5 rounded-md bg-[var(--bg-sheet)]/95 backdrop-blur-xs border border-[var(--border-sheet)] shadow-xs text-[var(--text-faint)] hover:text-[var(--text-main)] hover:border-[var(--accent-base)] cursor-pointer flex items-center justify-center"
-                  title="Hide Target Card (re-enable anytime in Sections menu)"
+                  title="Hide Target Card"
                   aria-label="Hide Target Card"
                 >
                   <EyeOff className="w-3.5 h-3.5" />
@@ -196,7 +202,7 @@ export const Masthead: React.FC<MastheadProps> = ({
             )}
 
             <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-[var(--text-faint)]">
-              <div className="min-w-0 truncate">
+              <div className="min-w-0 flex-1 truncate mr-2">
                 <EditableText
                   value={target.cardHeaderLabel || "Target Requisition"}
                   onChange={(val) => onUpdateTarget("cardHeaderLabel", val)}
@@ -209,7 +215,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                 />
               </div>
 
-              <div className="flex items-center shrink-0">
+              <div className="flex items-center shrink-0 ml-auto">
                 <span className="font-mono text-[9px] uppercase tracking-wider bg-[var(--bg-sheet)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-full text-[var(--text-faint)] shadow-2xs select-none">
                   <EditableText
                     value={target.cardBadgeLabel || "CONFIDENTIAL"}
@@ -220,7 +226,7 @@ export const Masthead: React.FC<MastheadProps> = ({
               </div>
             </div>
 
-            <div className="space-y-0.5">
+            <div className="space-y-1 pt-0.5">
               <div className="text-[9.5px] uppercase tracking-wider text-[var(--text-faint)]">
                 <EditableText
                   value={
@@ -240,8 +246,8 @@ export const Masthead: React.FC<MastheadProps> = ({
                 disabled={disabled}
                 className={
                   isEditorial ?
-                    "font-serif font-bold text-[20px] text-[var(--text-main)] leading-snug tracking-tight"
-                  : "font-sans font-extrabold text-[17px] text-[var(--text-main)] leading-snug tracking-tight"
+                    "font-serif font-bold text-[20px] text-[var(--text-main)] leading-snug tracking-tight block"
+                  : "font-sans font-extrabold text-[17px] text-[var(--text-main)] leading-snug tracking-tight block"
                 }
               />
               <EditableText
@@ -251,14 +257,14 @@ export const Masthead: React.FC<MastheadProps> = ({
                 disabled={disabled}
                 className={
                   isEditorial ?
-                    "font-serif italic text-[14px] text-[var(--accent-base)] font-medium leading-tight"
-                  : "font-sans text-[12.5px] font-semibold text-[var(--accent-base)] tracking-tight leading-tight"
+                    "font-serif italic text-[14px] text-[var(--accent-base)] font-medium leading-normal block mt-0.5"
+                  : "font-sans text-[12.5px] font-semibold text-[var(--accent-base)] tracking-tight leading-normal block mt-0.5"
                 }
               />
             </div>
 
-            <div className="pt-2 border-t border-[var(--border-sheet)]/60">
-              <div className="grid grid-cols-[100px_1fr] sm:grid-cols-[105px_1fr] gap-3 text-[11px] items-start">
+            <div className="pt-2.5 border-t border-[var(--border-sheet)]/60">
+              <div className="grid grid-cols-[105px_1fr] gap-3 text-[11px] items-start">
                 <div className="space-y-0.5">
                   <span className="text-[9.5px] text-[var(--text-faint)] uppercase tracking-wider block font-mono">
                     <EditableText
@@ -287,7 +293,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                     />
                   </span>
                   <div
-                    className="text-[var(--text-body)] font-medium whitespace-nowrap overflow-x-auto scrollbar-none"
+                    className="text-[var(--text-body)] font-medium whitespace-nowrap overflow-hidden text-ellipsis"
                     title={target.location}
                   >
                     <EditableText
@@ -301,10 +307,10 @@ export const Masthead: React.FC<MastheadProps> = ({
             </div>
 
             {showAvailability && (
-              <div className="group/avail relative inline-flex items-center pt-1">
+              <div className="group/avail relative inline-flex items-center pt-1.5">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium bg-[var(--bg-sheet)] border border-[var(--border-subtle)] text-[var(--accent-base)] shadow-2xs">
-                  <span className="relative flex h-2 w-2 shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent-base)] opacity-40"></span>
+                  <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
+                    <span className="animate-ping availability-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent-base)] opacity-40"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent-base)]"></span>
                   </span>
                   <EditableText

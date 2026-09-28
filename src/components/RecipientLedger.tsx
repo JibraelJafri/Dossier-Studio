@@ -39,8 +39,9 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
         </div>
       )}
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-start">
-        <div className="space-y-1">
+      {/* Strict 4-column ledger matching the 896px sheet without multi-row collapsing */}
+      <div className="grid grid-cols-4 gap-4 sm:gap-6 items-start">
+        <div className="space-y-1 min-w-0">
           <div
             className={
               isEditorial ?
@@ -57,8 +58,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif font-medium text-base text-[var(--text-main)]"
-              : "font-semibold text-xs text-[var(--text-main)]"
+                "font-serif font-medium text-base text-[var(--text-main)] leading-snug break-words"
+              : "font-semibold text-xs text-[var(--text-main)] leading-snug break-words"
             }
           >
             <EditableText
@@ -69,7 +70,7 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           </div>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 min-w-0">
           <div
             className={
               isEditorial ?
@@ -86,8 +87,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif text-sm font-medium text-[var(--text-body)]"
-              : "text-xs text-[var(--text-body)] font-medium"
+                "font-serif text-sm font-medium text-[var(--text-body)] leading-snug break-words"
+              : "text-xs text-[var(--text-body)] font-medium leading-snug break-words"
             }
           >
             <EditableText
@@ -98,7 +99,7 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           </div>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 min-w-0">
           <div
             className={
               isEditorial ?
@@ -115,8 +116,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif text-sm font-medium text-[var(--text-body)]"
-              : "text-xs text-[var(--text-body)] font-medium"
+                "font-serif text-sm font-medium text-[var(--text-body)] leading-snug break-words"
+              : "text-xs text-[var(--text-body)] font-medium leading-snug break-words"
             }
           >
             <EditableText
@@ -127,7 +128,7 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           </div>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 min-w-0">
           <div
             className={
               isEditorial ?
@@ -144,8 +145,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif text-sm font-medium text-[var(--text-body)]"
-              : "text-xs text-[var(--text-body)] font-medium"
+                "font-serif text-sm font-medium text-[var(--text-body)] leading-snug break-words"
+              : "text-xs text-[var(--text-body)] font-medium leading-snug break-words"
             }
           >
             <EditableText

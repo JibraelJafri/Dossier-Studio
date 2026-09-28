@@ -255,4 +255,13 @@ body {
     background-color: transparent !important;
     box-shadow: none !important;
   }
+  .animate-ping,
+  .availability-ping {
+    display: none !important;
+  }
+}
+
+.preview-mode .animate-ping,
+.preview-mode .availability-ping {
+  display: none !important;
 }

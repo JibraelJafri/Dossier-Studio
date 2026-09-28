@@ -82,7 +82,6 @@ export const AiBridgeModal: React.FC<AiBridgeModalProps> = ({
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    // WAI-ARIA Dialog focus trap & escape handling
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
@@ -127,8 +126,8 @@ export const AiBridgeModal: React.FC<AiBridgeModalProps> = ({
     const snap: HistorySnapshot = {
       id: `snap-${Date.now()}`,
       timestamp: Date.now(),
-      studio: dataToSnapshot.target.studio,
-      role: dataToSnapshot.target.role,
+      studio: dataToSnapshot.target.studio || "Generalized",
+      role: dataToSnapshot.target.role || "Executive Dossier",
       summary: label,
       data: JSON.parse(JSON.stringify(dataToSnapshot)),
     };
@@ -140,19 +139,26 @@ export const AiBridgeModal: React.FC<AiBridgeModalProps> = ({
   };
 
   const generatePrompt = () => {
-    const targetStudio = dossierData.target.studio || "Target Studio";
-    const targetRole = dossierData.target.role || "Target Role";
+    const candidateName = dossierData.applicant.name || "Candidate";
+    const candidateTitle = dossierData.applicant.title || "Technical Artist & Systems TD";
 
-    const basePrompt = `You are a Principal Technical Director and Studio Hiring Lead.
-I am customizing a high-impact executive dossier for the following position:
-- Target Studio: ${targetStudio}
-- Target Role: ${targetRole}
-${jobContext.trim() ? `\nSPECIFIC JOB POSTING / USER REQUIREMENTS:\n${jobContext.trim()}\n` : ""}`;
+    const basePrompt = `You are an elite Principal Technical Director and Studio Technical Art Hiring Lead.
+Your objective is to author an authoritative, versatile, generalized executive technical dossier and cover letter for:
+- Candidate: ${candidateName}
+- Professional Discipline / Focus: ${candidateTitle}
+${jobContext.trim() ? `\nADDITIONAL TECHNICAL SPECIALTIES / DOMAIN FOCUS:\n${jobContext.trim()}\n` : ""}
+
+CRITICAL OPERATIONAL CONSTRAINT — GENERALIZED TECHNICAL PROFILE:
+Do NOT lock or tailor this content to any specific company, employer, studio name, or requisition ID. The copy must be generalized, universally compelling, and production-credible across all top-tier AAA game development and real-time interactive technology studios. Highlight technical architecture, procedural world generation, shader pipelines, low-level frametime budgets, and pipeline automation.`;
 
     if (syncScope === "statement") {
       return `${basePrompt}
-TASK: Rewrite the statement of intent (executive dossier prose) tailored to this studio and role.
-Emphasize architectural depth, frametime budgets, shader pipelines, and real-time procedural world systems.
+
+TASK: Author a generalized Statement of Intent (executive technical cover letter prose).
+Requirements:
+1. Deliver a compelling statement of intent emphasizing technical depth: sub-millisecond frametime budgets, custom shader instruction culling, procedural generation graphs, and bridging artistic ambition with engine engineering.
+2. Keep the salutation generalized (e.g. "Dear Technical Art Leads & Hiring Team,").
+3. Do NOT target any single specific employer or company.
 
 CURRENT PROSE JSON SCHEMA:
 \`\`\`json
@@ -164,7 +170,12 @@ REQUIREMENT: Output ONLY a valid JSON object matching the schema above wrapped i
 
     if (syncScope === "benchmarks") {
       return `${basePrompt}
-TASK: Tailor the 3 verified benchmark metrics and the 3 architectural competency columns to this requisition.
+
+TASK: Generate 3 verified technical telemetry benchmarks and 3 core architecture competency columns.
+Requirements:
+1. Provide measurable, generalized production performance achievements (e.g., draw-call reduction, automation cook throughput, procedural territory scale, VRAM streaming).
+2. Competency columns must represent core pillars: Shading & GPU Core, Procedural & Engine Systems, and Pipelines & Automation Toolchains.
+3. Keep all metrics and competency categories generalized and applicable across premier real-time engines.
 
 CURRENT BENCHMARKS & TAXONOMY:
 \`\`\`json
@@ -184,8 +195,12 @@ REQUIREMENT: Output ONLY a valid JSON object matching the schema above wrapped i
     }
 
     return `${basePrompt}
-TASK: Customize this complete executive technical dossier for the position.
-Adapt requisition fields, the statement prose, the 3 telemetry benchmark cards, and the 3 taxonomy columns. Preserve candidate personal contact information in applicant and signoff.
+
+TASK: Generate a complete generalized executive technical dossier.
+Requirements:
+1. Target and requisition metadata fields must remain generalized (e.g., attention to "Technical Art & Systems Leadership", studio identifier as "Premier AAA Studio / Interactive Tech", track as "Core Engine, Worldbuilding & Pipelines").
+2. The statement prose, 3 telemetry benchmark cards, and 3 taxonomy competency columns must be generalized, high-impact, and universally persuasive.
+3. Retain the candidate's personal contact details in applicant and signoff.
 
 CURRENT MASTER DOSSIER:
 \`\`\`json
@@ -257,7 +272,9 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
     onApplyData(pendingChanges.sanitizedData);
     saveSnapshot(
       pendingChanges.sanitizedData,
-      pendingChanges.changes.length > 0 ? pendingChanges.changes.join(" · ") : "AI sync update",
+      pendingChanges.changes.length > 0 ?
+        pendingChanges.changes.join(" · ")
+      : "AI generalized update",
     );
     onClose();
   };
@@ -274,7 +291,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
 
   return (
     <div
-      className="fixed inset-0 bg-black/75 backdrop-blur-sm z-[100] flex items-center justify-center p-3 sm:p-6 no-print overflow-y-auto"
+      className="fixed inset-0 bg-black/75 backdrop-blur-sm z-100 flex items-center justify-center p-3 sm:p-6 no-print overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="ai-sync-modal-title"
@@ -286,11 +303,11 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
         ref={modalContainerRef}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className="bg-[var(--bg-sheet)] border border-[var(--border-sheet)] rounded-2xl w-full max-w-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden my-auto text-xs focus:outline-none"
+        className="bg-(--bg-sheet) border border-[var(--border-sheet)] rounded-2xl w-full max-w-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden my-auto text-xs focus:outline-none"
       >
         <header className="px-5 py-4 border-b border-[var(--border-sheet)] flex items-center justify-between bg-[var(--bg-subtle)] shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center text-[var(--accent-base)] shadow-2xs">
+            <div className="w-8 h-8 rounded-lg bg-(--accent-soft) flex items-center justify-center text-(--accent-base) shadow-2xs">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
@@ -298,10 +315,11 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                 id="ai-sync-modal-title"
                 className="font-bold text-sm text-[var(--text-main)] leading-tight"
               >
-                AI Studio Assistant
+                AI Dossier Assistant (Generalized Workflow)
               </h3>
               <p className="text-[11px] text-[var(--text-muted)]">
-                Copy structured prompt to ChatGPT, Claude, Gemini, or DeepSeek — paste output back to update.
+                Synthesize versatile, high-impact technical copy for ChatGPT, Claude, Gemini, or
+                DeepSeek.
               </p>
             </div>
           </div>
@@ -320,9 +338,9 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
             type="button"
             onClick={() => setActiveTab("sync")}
             className={`py-2.5 px-3 font-semibold transition-all border-b-2 cursor-pointer flex items-center gap-1.5 ${
-              activeTab === "sync"
-                ? "border-[var(--accent-base)] text-[var(--accent-base)]"
-                : "border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]"
+              activeTab === "sync" ?
+                "border-[var(--accent-base)] text-[var(--accent-base)]"
+              : "border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]"
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -333,9 +351,9 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
             type="button"
             onClick={() => setActiveTab("history")}
             className={`py-2.5 px-3 font-semibold transition-all border-b-2 cursor-pointer flex items-center gap-1.5 ${
-              activeTab === "history"
-                ? "border-[var(--accent-base)] text-[var(--accent-base)]"
-                : "border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]"
+              activeTab === "history" ?
+                "border-[var(--accent-base)] text-[var(--accent-base)]"
+              : "border-transparent text-[var(--text-muted)] hover:text-(--text-main)"
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
@@ -346,17 +364,17 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
         <div className="p-5 overflow-y-auto space-y-4 flex-1">
           {activeTab === "sync" && (
             <>
-              <section className="p-4 rounded-xl border border-[var(--border-sheet)] bg-[var(--bg-subtle)]/60 space-y-3">
+              <section className="p-4 rounded-xl border border-(--border-sheet) bg-[var(--bg-subtle)]/60 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-[var(--accent-base)] text-white font-mono text-[10px] flex items-center justify-center font-bold">
                       1
                     </span>
-                    <span className="font-bold text-xs uppercase font-mono tracking-wider text-[var(--text-main)]">
-                      Copy Optimized AI Prompt
+                    <span className="font-bold text-xs uppercase font-mono tracking-wider text-(--text-main)">
+                      Copy Generalized AI Prompt
                     </span>
                   </div>
-                  <span className="text-[11px] text-[var(--text-faint)]">Step 1 of 2</span>
+                  <span className="text-[11px] text-(--text-faint)">Step 1 of 2</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-2">
@@ -364,9 +382,9 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     type="button"
                     onClick={() => setSyncScope("full")}
                     className={`p-2 rounded-lg border text-left cursor-pointer transition-all ${
-                      syncScope === "full"
-                        ? "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
-                        : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                      syncScope === "full" ?
+                        "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
+                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5 mb-1" />
@@ -377,9 +395,9 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     type="button"
                     onClick={() => setSyncScope("statement")}
                     className={`p-2 rounded-lg border text-left cursor-pointer transition-all ${
-                      syncScope === "statement"
-                        ? "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
-                        : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                      syncScope === "statement" ?
+                        "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
+                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
                     }`}
                   >
                     <FileText className="w-3.5 h-3.5 mb-1" />
@@ -390,9 +408,9 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     type="button"
                     onClick={() => setSyncScope("benchmarks")}
                     className={`p-2 rounded-lg border text-left cursor-pointer transition-all ${
-                      syncScope === "benchmarks"
-                        ? "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
-                        : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                      syncScope === "benchmarks" ?
+                        "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
+                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
                     }`}
                   >
                     <Activity className="w-3.5 h-3.5 mb-1" />
@@ -404,30 +422,29 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                   rows={2}
                   value={jobContext}
                   onChange={(e) => setJobContext(e.target.value)}
-                  placeholder="Optional: Paste job posting description or specific focus areas (e.g. 'Highlight Unreal Engine 5.4 PCG and custom HLSL culling')..."
+                  placeholder="Optional: Highlight technical specialties or engine domains (e.g. 'Emphasize Unreal Engine 5.4 PCG, compute HLSL, and Maya/Python pipelines')..."
                   className="w-full text-xs font-mono p-2.5 rounded-lg bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-main)] focus:outline-none focus:border-[var(--accent-base)]"
                 />
 
                 <div className="flex items-center justify-between pt-1">
                   <span className="text-[11px] text-[var(--text-muted)]">
-                    Compatible with ChatGPT, Claude, Gemini & DeepSeek
+                    Compatible with ChatGPT, Claude, Gemini &amp; DeepSeek
                   </span>
                   <button
                     type="button"
                     onClick={handleCopyPrompt}
                     className="px-4 py-1.5 bg-[var(--accent-base)] hover:opacity-95 text-white font-semibold rounded-lg text-xs flex items-center gap-1.5 cursor-pointer shadow-xs"
                   >
-                    {copiedPrompt ? (
+                    {copiedPrompt ?
                       <>
                         <Check className="w-3.5 h-3.5" />
                         <span>Prompt Copied!</span>
                       </>
-                    ) : (
-                      <>
+                    : <>
                         <Copy className="w-3.5 h-3.5" />
                         <span>Copy Prompt</span>
                       </>
-                    )}
+                    }
                   </button>
                 </div>
               </section>
@@ -464,13 +481,13 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                       setPendingChanges(null);
                     }
                   }}
-                  placeholder="Paste the AI's generated response here..."
+                  placeholder="Paste the generated JSON response here..."
                   className="w-full text-xs font-mono p-2.5 rounded-lg bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-main)] focus:outline-none focus:border-[var(--accent-base)]"
                 />
 
                 {pendingChanges && (
                   <div className="space-y-2">
-                    {pendingChanges.changes.length > 0 ? (
+                    {pendingChanges.changes.length > 0 ?
                       <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-800 dark:text-emerald-300 space-y-1">
                         <div className="font-bold flex items-center gap-1.5">
                           <Check className="w-4 h-4 text-emerald-600" />
@@ -482,11 +499,11 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                           ))}
                         </ul>
                       </div>
-                    ) : pendingChanges.warnings.length === 0 ? (
+                    : pendingChanges.warnings.length === 0 ?
                       <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-800 dark:text-blue-300 text-[11px]">
                         Payload verified against schema. All fields match current document state.
                       </div>
-                    ) : null}
+                    : null}
 
                     {pendingChanges.warnings.length > 0 && (
                       <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 space-y-1">
@@ -502,7 +519,8 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                       </div>
                     )}
 
-                    {(pendingChanges.changes.length > 0 || pendingChanges.warnings.length === 0) && (
+                    {(pendingChanges.changes.length > 0 ||
+                      pendingChanges.warnings.length === 0) && (
                       <button
                         type="button"
                         onClick={handleApply}
@@ -540,12 +558,12 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                 )}
               </div>
 
-              {history.length === 0 ? (
+              {history.length === 0 ?
                 <div className="text-center py-8 text-[var(--text-muted)]">
-                  No snapshots recorded yet. Updates applied via AI or manual saves are tracked here.
+                  No snapshots recorded yet. Updates applied via AI or manual saves are tracked
+                  here.
                 </div>
-              ) : (
-                <div className="space-y-2">
+              : <div className="space-y-2">
                   {history.map((snap) => (
                     <div
                       key={snap.id}
@@ -577,7 +595,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     </div>
                   ))}
                 </div>
-              )}
+              }
             </div>
           )}
         </div>
@@ -593,7 +611,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `dossier_${(dossierData.target.studio || "master").toLowerCase().replace(/[^a-z0-9]/g, "_")}.json`;
+                a.download = `dossier_${(dossierData.applicant.name || "master").toLowerCase().replace(/[^a-z0-9]/g, "_")}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
               }}

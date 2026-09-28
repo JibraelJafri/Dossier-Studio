@@ -112,7 +112,7 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
       </div>
 
       {/* Tri-Column Architectural Matrix */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+      <div className="grid grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
         {taxonomy.map((col, cIdx) => (
           <div key={cIdx} className="space-y-4">
             <div className="pb-1 space-y-0.5">
