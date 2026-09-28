@@ -49,6 +49,7 @@ export const AiBridgeModal: React.FC<AiBridgeModalProps> = ({
   const [jobContext, setJobContext] = useState("");
   const [pastedInput, setPastedInput] = useState("");
   const [copiedPrompt, setCopiedPrompt] = useState(false);
+  const [copiedJson, setCopiedJson] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<{
     sanitizedData: DossierData;
     changes: string[];
@@ -223,6 +224,23 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
         document.execCommand("copy");
         setCopiedPrompt(true);
         setTimeout(() => setCopiedPrompt(false), 2500);
+      }
+    }
+  };
+
+  const handleCopyJson = async () => {
+    const jsonStr = JSON.stringify(dossierData, null, 2);
+    try {
+      await navigator.clipboard.writeText(jsonStr);
+      setCopiedJson(true);
+      setTimeout(() => setCopiedJson(false), 2000);
+    } catch {
+      if (textareaRef.current) {
+        textareaRef.current.value = jsonStr;
+        textareaRef.current.select();
+        document.execCommand("copy");
+        setCopiedJson(true);
+        setTimeout(() => setCopiedJson(false), 2000);
       }
     }
   };
@@ -601,7 +619,30 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
         </div>
 
         <footer className="px-5 py-3 border-t border-(--border-sheet) bg-(--bg-subtle) flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {/* Direct Copy JSON Action with Clipboard Feedback */}
+            <button
+              type="button"
+              onClick={handleCopyJson}
+              className={`text-[11px] font-medium flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all cursor-pointer shadow-2xs ${
+                copiedJson ?
+                  "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-400 font-semibold"
+                : "bg-(--bg-sheet) border-(--border-sheet) text-(--text-main) hover:border-(--accent-base)"
+              }`}
+              title="Copy entire dossier JSON data directly to clipboard"
+            >
+              {copiedJson ?
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 stroke-3" />
+                  <span>Copied JSON!</span>
+                </>
+              : <>
+                  <Copy className="w-3.5 h-3.5 text-(--accent-base)" />
+                  <span>Copy JSON</span>
+                </>
+              }
+            </button>
+
             <button
               type="button"
               onClick={() => {
@@ -615,15 +656,19 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                 a.click();
                 URL.revokeObjectURL(url);
               }}
-              className="text-[11px] text-(--text-muted) hover:text-(--text-main) flex items-center gap-1 cursor-pointer"
+              className="text-[11px] text-(--text-muted) hover:text-(--text-main) flex items-center gap-1 cursor-pointer transition-colors"
+              title="Download dossier as a .json file"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Export JSON</span>
+              <span>Export File</span>
             </button>
 
-            <label className="text-[11px] text-(--text-muted) hover:text-(--text-main) flex items-center gap-1 cursor-pointer">
+            <label
+              className="text-[11px] text-(--text-muted) hover:text-(--text-main) flex items-center gap-1 cursor-pointer transition-colors"
+              title="Load dossier from a .json file"
+            >
               <Upload className="w-3.5 h-3.5" />
-              <span>Import JSON</span>
+              <span>Import File</span>
               <input
                 type="file"
                 accept=".json"
