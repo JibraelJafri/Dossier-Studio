@@ -184,7 +184,7 @@ export const Masthead: React.FC<MastheadProps> = ({
         {/* Right: Target Capsule */}
         {showTargetCard && (
           <aside
-            className="group/target relative bg-(--bg-subtle)/80 dark:bg-(--bg-subtle)/60 border border-(--border-sheet)/80 dark:border-(--border-subtle) rounded-2xl p-4 sm:p-5 text-xs w-full max-w-[340px] md:w-[340px] shrink-0 space-y-2.5 shadow-2xs transition-all duration-200"
+            className="group/target relative bg-(--bg-subtle)/80 dark:bg-(--bg-subtle)/60 border border-(--border-sheet)/80 dark:border-(--border-subtle) rounded-2xl p-4 sm:p-5 text-xs w-full max-w-85 md:w-85 shrink-0 space-y-2.5 shadow-2xs transition-all duration-200"
             aria-label="Target Requisition Metadata"
           >
             {!disabled && (
@@ -265,7 +265,7 @@ export const Masthead: React.FC<MastheadProps> = ({
 
             <div className="pt-2 border-t border-(--border-sheet)/60">
               <div className="flex items-start justify-between gap-4 text-[11px]">
-                <div className="w-[110px] shrink-0 space-y-0.5">
+                <div className="w-27.5 shrink-0 space-y-0.5">
                   <span className="text-[9.5px] text-(--text-faint) uppercase block font-mono">
                     <EditableText
                       value={target.dateLabel || "Date of Record"}

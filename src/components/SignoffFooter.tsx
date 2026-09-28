@@ -239,7 +239,7 @@ export const SignoffFooter: React.FC<SignoffFooterProps> = ({
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                  <span className="text-[9.5px] font-mono text-(--text-faint) truncate max-w-[130px]">
+                  <span className="text-[9.5px] font-mono text-(--text-faint) truncate max-w-32.5">
                     {cleanDisplayHost}
                   </span>
                   <div className="flex items-center gap-1.5">

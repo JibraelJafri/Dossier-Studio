@@ -355,7 +355,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
 
         {showSyntaxGuide && (
           <div
-            className="markdown-toolbar-container no-print absolute -top-24 left-0 z-50 p-2.5 bg-(--bg-sheet) border border-(--border-sheet) rounded-xl shadow-xl text-[11px] space-y-1 min-w-[260px] text-(--text-muted)"
+            className="markdown-toolbar-container no-print absolute -top-24 left-0 z-50 p-2.5 bg-(--bg-sheet) border border-(--border-sheet) rounded-xl shadow-xl text-[11px] space-y-1 min-w-65 text-(--text-muted)"
             onMouseDown={(e) => e.preventDefault()}
           >
             <div className="font-semibold text-(--text-main) pb-0.5 border-b border-(--border-sheet)">
@@ -378,7 +378,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
 
         {showLinkDialog && (
           <div
-            className="markdown-toolbar-container no-print absolute -top-36 left-0 z-50 p-3 bg-(--bg-sheet) border border-(--border-sheet) rounded-xl shadow-2xl space-y-2 min-w-[280px]"
+            className="markdown-toolbar-container no-print absolute -top-36 left-0 z-50 p-3 bg-(--bg-sheet) border border-(--border-sheet) rounded-xl shadow-2xl space-y-2 min-w-70"
             onMouseDown={(e) => e.stopPropagation()}
           >
             <div className="text-[11px] font-bold text-(--text-main) flex items-center justify-between">

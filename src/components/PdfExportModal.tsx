@@ -371,7 +371,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
 
               {/* Viewport Frame with Height Bound */}
               <div
-                className={`relative w-[276px] rounded-xl shadow-2xl border overflow-hidden transition-all duration-300 ${
+                className={`relative w-69 rounded-xl shadow-2xl border overflow-hidden transition-all duration-300 ${
                   themeMode === "force-light" ? "bg-white border-zinc-300 shadow-zinc-950/15"
                   : isDark ? "bg-[#131211] border-[#282522] shadow-black/50"
                   : "bg-white border-[#e2ded4] shadow-zinc-950/10"
@@ -468,9 +468,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
 
               <div className="p-2 rounded-xl bg-(--bg-sheet) border border-(--border-sheet)">
                 <div className="text-[9px] text-(--text-faint) uppercase">Payload</div>
-                <div className="font-semibold text-(--accent-base) mt-0.5">
-                  {payloadEstimate}
-                </div>
+                <div className="font-semibold text-(--accent-base) mt-0.5">{payloadEstimate}</div>
               </div>
             </div>
           </aside>
@@ -498,9 +496,9 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                     <div className="flex items-center gap-2 font-bold text-xs">
                       <Globe
                         className={`w-4 h-4 ${
-                          format === "digital-folio" ?
-                            "text-(--accent-base)"
-                          : "text-(--text-muted)"
+                          format === "digital-folio" ? "text-(--accent-base)" : (
+                            "text-(--text-muted)"
+                          )
                         }`}
                       />
                       <span>Digital Folio</span>
@@ -537,9 +535,9 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                     <div className="flex items-center gap-2 font-bold text-xs">
                       <Printer
                         className={`w-4 h-4 ${
-                          format !== "digital-folio" ?
-                            "text-(--accent-base)"
-                          : "text-(--text-muted)"
+                          format !== "digital-folio" ? "text-(--accent-base)" : (
+                            "text-(--text-muted)"
+                          )
                         }`}
                       />
                       <span>Standard Paper</span>
