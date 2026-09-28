@@ -65,7 +65,7 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
 
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-2 mb-6">
-        <h2 className="flex items-center gap-1.5 shrink-0">
+        <h2 className="flex items-baseline gap-2 shrink-0">
           <span
             className={
               isEditorial ?

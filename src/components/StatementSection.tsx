@@ -33,8 +33,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
 
   return (
     <section className="transition-colors duration-200" aria-label="Statement of Intent">
-      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 pb-2 mb-4">
-        <h2 className="flex items-center gap-1.5 shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-2 mb-4">
+        <h2 className="flex items-baseline gap-2 shrink-0">
           <span
             className={
               isEditorial ?
@@ -138,7 +138,9 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
                 aria-valuemax={36}
                 style={{ height: `${paragraphGap}px` }}
                 className={`relative w-full transition-colors flex items-center justify-center outline-none ${
-                  !disabled ? "cursor-ns-resize group/pargap focus-visible:ring-1 focus-visible:ring-(--accent-base) rounded-xs" : ""
+                  !disabled ?
+                    "cursor-ns-resize group/pargap focus-visible:ring-1 focus-visible:ring-(--accent-base) rounded-xs"
+                  : ""
                 } ${activeGapIdx === idx ? "bg-(--accent-base)/10" : ""}`}
                 onKeyDown={(e) => {
                   if (disabled || !onChangeParagraphGap) return;
@@ -210,8 +212,7 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
           </button>
 
           <span className="text-[11px] font-mono text-(--text-faint) select-none hidden sm:inline-block">
-            Markdown active:{" "}
-            <span className="text-(--text-muted) font-semibold">**bold**</span> ·{" "}
+            Markdown active: <span className="text-(--text-muted) font-semibold">**bold**</span> ·{" "}
             <span className="text-(--text-muted) italic">*italic*</span> ·{" "}
             <span className="text-(--accent-base) underline">[link](url)</span> ·{" "}
             <span className="text-(--accent-base) font-mono">`code`</span>
