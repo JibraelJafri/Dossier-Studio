@@ -22,7 +22,7 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
 
   return (
     <section
-      className="group/ledger relative py-3.5 sm:py-4 px-5 sm:px-6 bg-[var(--bg-subtle)]/60 rounded-2xl text-xs transition-colors duration-200"
+      className="group/ledger relative py-3.5 sm:py-4 px-5 sm:px-6 bg-(--bg-subtle)/60 rounded-2xl text-xs transition-colors duration-200"
       aria-label="Submission Record Ledger"
     >
       {!disabled && onHide && (
@@ -30,7 +30,7 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <button
             type="button"
             onClick={onHide}
-            className="p-1.5 rounded-md bg-[var(--bg-sheet)]/95 backdrop-blur-xs border border-[var(--border-sheet)] shadow-xs text-[var(--text-faint)] hover:text-[var(--text-main)] hover:border-[var(--accent-base)] cursor-pointer flex items-center justify-center relative before:absolute before:-inset-2 before:content-['']"
+            className="p-1.5 rounded-md bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) shadow-xs text-(--text-faint) hover:text-(--text-main) hover:border-(--accent-base) cursor-pointer flex items-center justify-center relative before:absolute before:-inset-2 before:content-['']"
             title="Hide Recipient Ledger"
             aria-label="Hide Recipient Ledger"
           >
@@ -45,8 +45,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif italic text-xs text-[var(--text-faint)]"
-              : "text-[10px] font-mono uppercase tracking-wider text-[var(--text-faint)]"
+                "font-serif italic text-xs text-(--text-faint)"
+              : "text-[10px] font-mono uppercase tracking-wider text-(--text-faint)"
             }
           >
             <EditableText
@@ -58,8 +58,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif font-medium text-base text-[var(--text-main)] leading-snug break-words"
-              : "font-semibold text-xs text-[var(--text-main)] leading-snug break-words"
+                "font-serif font-medium text-base text-(--text-main) leading-snug wrap-break-word"
+              : "font-semibold text-xs text-(--text-main) leading-snug wrap-break-word"
             }
           >
             <EditableText
@@ -74,8 +74,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif italic text-xs text-[var(--text-faint)]"
-              : "text-[10px] font-mono uppercase tracking-wider text-[var(--text-faint)]"
+                "font-serif italic text-xs text-(--text-faint)"
+              : "text-[10px] font-mono uppercase tracking-wider text-(--text-faint)"
             }
           >
             <EditableText
@@ -87,8 +87,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif text-sm font-medium text-[var(--text-body)] leading-snug break-words"
-              : "text-xs text-[var(--text-body)] font-medium leading-snug break-words"
+                "font-serif text-sm font-medium text-(--text-body) leading-snug wrap-break-word"
+              : "text-xs text-(--text-body) font-medium leading-snug wrap-break-word"
             }
           >
             <EditableText
@@ -103,8 +103,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif italic text-xs text-[var(--text-faint)]"
-              : "text-[10px] font-mono uppercase tracking-wider text-[var(--text-faint)]"
+                "font-serif italic text-xs text-(--text-faint)"
+              : "text-[10px] font-mono uppercase tracking-wider text-(--text-faint)"
             }
           >
             <EditableText
@@ -116,8 +116,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif text-sm font-medium text-[var(--text-body)] leading-snug break-words"
-              : "text-xs text-[var(--text-body)] font-medium leading-snug break-words"
+                "font-serif text-sm font-medium text-(--text-body) leading-snug wrap-break-word"
+              : "text-xs text-(--text-body) font-medium leading-snug wrap-break-word"
             }
           >
             <EditableText
@@ -132,8 +132,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif italic text-xs text-[var(--text-faint)]"
-              : "text-[10px] font-mono uppercase tracking-wider text-[var(--text-faint)]"
+                "font-serif italic text-xs text-(--text-faint)"
+              : "text-[10px] font-mono uppercase tracking-wider text-(--text-faint)"
             }
           >
             <EditableText
@@ -145,8 +145,8 @@ export const RecipientLedger: React.FC<RecipientLedgerProps> = ({
           <div
             className={
               isEditorial ?
-                "font-serif text-sm font-medium text-[var(--text-body)] leading-snug break-words"
-              : "text-xs text-[var(--text-body)] font-medium leading-snug break-words"
+                "font-serif text-sm font-medium text-(--text-body) leading-snug wrap-break-word"
+              : "text-xs text-(--text-body) font-medium leading-snug wrap-break-word"
             }
           >
             <EditableText

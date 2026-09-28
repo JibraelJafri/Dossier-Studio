@@ -52,7 +52,7 @@ describe("markdown utilities", () => {
 
     it("formats bold and italic syntax accurately", () => {
       const parsedBold = parseMarkdown("This is **critical** performance");
-      expect(parsedBold).toContain('<strong class="font-semibold text-[var(--text-main)]">critical</strong>');
+      expect(parsedBold).toContain('<strong class="font-semibold text-(--text-main)">critical</strong>');
 
       const parsedItalic = parseMarkdown("This is *highlighted* prose");
       expect(parsedItalic).toContain('<em class="italic">highlighted</em>');

@@ -247,7 +247,7 @@ export default function App() {
       <main
         ref={sheetRef}
         id="dossier-sheet"
-        className={`print-sheet relative max-w-4xl mx-auto bg-[var(--bg-sheet)] rounded-2xl transition-all duration-150 ${
+        className={`print-sheet relative max-w-4xl mx-auto bg-(--bg-sheet) rounded-2xl transition-all duration-150 ${
           data.typographyStyle === "editorial" ? "dossier-editorial" : "dossier-modern"
         } ${isPreviewMode ? "preview-mode ring-1 ring-black/5 dark:ring-white/10" : ""}`}
         style={{
@@ -280,15 +280,15 @@ export default function App() {
             id="a4-page-guideline"
           >
             <div className="relative flex items-center justify-between px-2 sm:px-6">
-              <div className="h-0 flex-1 border-t-2 border-dashed border-[var(--accent-border)]" />
-              <div className="pointer-events-auto mx-2 sm:mx-3 px-3 py-1 rounded-full text-[10.5px] font-mono font-medium shadow-md flex items-center gap-2 whitespace-nowrap bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)]">
+              <div className="h-0 flex-1 border-t-2 border-dashed border-(--accent-border)" />
+              <div className="pointer-events-auto mx-2 sm:mx-3 px-3 py-1 rounded-full text-[10.5px] font-mono font-medium shadow-md flex items-center gap-2 whitespace-nowrap bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted)">
                 <span>✂ Physical Paper Reference (A4: 297mm)</span>
                 <span className="opacity-40">·</span>
-                <span className="text-[var(--accent-base)]">
+                <span className="text-(--accent-base)">
                   Digital Folio PDF Exports Continuous
                 </span>
               </div>
-              <div className="h-0 flex-1 border-t-2 border-dashed border-[var(--accent-border)]" />
+              <div className="h-0 flex-1 border-t-2 border-dashed border-(--accent-border)" />
             </div>
           </div>
         )}
@@ -656,26 +656,26 @@ export default function App() {
       </main>
 
       {!isPreviewMode && (
-        <footer className="max-w-4xl mx-auto mt-6 text-center text-xs text-[var(--text-muted)] no-print flex flex-wrap items-center justify-center gap-3">
+        <footer className="max-w-4xl mx-auto mt-6 text-center text-xs text-(--text-muted) no-print flex flex-wrap items-center justify-center gap-3">
           <span>Click any text to edit directly</span>
           <span aria-hidden="true">·</span>
           <span>Drag seams individually (hold Ctrl/Alt to sync all)</span>
           {hiddenSectionsCount > 0 && (
             <>
               <span aria-hidden="true">·</span>
-              <span className="text-[var(--accent-base)] font-mono font-medium">
+              <span className="text-(--accent-base) font-mono font-medium">
                 {hiddenSectionsCount} hidden section{hiddenSectionsCount > 1 ? "s" : ""} (toggle in
                 Toolbar)
               </span>
             </>
           )}
           <span aria-hidden="true">·</span>
-          <span className="text-[var(--text-faint)] font-mono text-[11px]">{saveStatus}</span>
+          <span className="text-(--text-faint) font-mono text-[11px]">{saveStatus}</span>
           <span aria-hidden="true">·</span>
           <button
             type="button"
             onClick={resetToDefaults}
-            className="text-[var(--accent-base)] hover:underline cursor-pointer"
+            className="text-(--accent-base) hover:underline cursor-pointer"
           >
             Reset Master Copy
           </button>

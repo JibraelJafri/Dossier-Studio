@@ -303,9 +303,9 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
         ref={modalContainerRef}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className="bg-(--bg-sheet) border border-[var(--border-sheet)] rounded-2xl w-full max-w-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden my-auto text-xs focus:outline-none"
+        className="bg-(--bg-sheet) border border-(--border-sheet) rounded-2xl w-full max-w-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden my-auto text-xs focus:outline-none"
       >
-        <header className="px-5 py-4 border-b border-[var(--border-sheet)] flex items-center justify-between bg-[var(--bg-subtle)] shrink-0">
+        <header className="px-5 py-4 border-b border-(--border-sheet) flex items-center justify-between bg-(--bg-subtle) shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-(--accent-soft) flex items-center justify-center text-(--accent-base) shadow-2xs">
               <Sparkles className="w-4 h-4" />
@@ -313,11 +313,11 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
             <div>
               <h3
                 id="ai-sync-modal-title"
-                className="font-bold text-sm text-[var(--text-main)] leading-tight"
+                className="font-bold text-sm text-(--text-main) leading-tight"
               >
                 AI Dossier Assistant (Generalized Workflow)
               </h3>
-              <p className="text-[11px] text-[var(--text-muted)]">
+              <p className="text-[11px] text-(--text-muted)">
                 Synthesize versatile, high-impact technical copy for ChatGPT, Claude, Gemini, or
                 DeepSeek.
               </p>
@@ -326,21 +326,21 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
           <button
             type="button"
             onClick={onClose}
-            className="text-[var(--text-muted)] hover:text-[var(--text-main)] p-1.5 rounded-lg border border-[var(--border-sheet)] hover:border-[var(--accent-base)] cursor-pointer"
+            className="text-(--text-muted) hover:text-(--text-main) p-1.5 rounded-lg border border-(--border-sheet) hover:border-(--accent-base) cursor-pointer"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
           </button>
         </header>
 
-        <nav className="flex border-b border-[var(--border-sheet)] bg-[var(--bg-sheet)] px-4 shrink-0">
+        <nav className="flex border-b border-(--border-sheet) bg-(--bg-sheet) px-4 shrink-0">
           <button
             type="button"
             onClick={() => setActiveTab("sync")}
             className={`py-2.5 px-3 font-semibold transition-all border-b-2 cursor-pointer flex items-center gap-1.5 ${
               activeTab === "sync" ?
-                "border-[var(--accent-base)] text-[var(--accent-base)]"
-              : "border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                "border-(--accent-base) text-(--accent-base)"
+              : "border-transparent text-(--text-muted) hover:text-(--text-main)"
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -352,8 +352,8 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
             onClick={() => setActiveTab("history")}
             className={`py-2.5 px-3 font-semibold transition-all border-b-2 cursor-pointer flex items-center gap-1.5 ${
               activeTab === "history" ?
-                "border-[var(--accent-base)] text-[var(--accent-base)]"
-              : "border-transparent text-[var(--text-muted)] hover:text-(--text-main)"
+                "border-(--accent-base) text-(--accent-base)"
+              : "border-transparent text-(--text-muted) hover:text-(--text-main)"
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
@@ -364,10 +364,10 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
         <div className="p-5 overflow-y-auto space-y-4 flex-1">
           {activeTab === "sync" && (
             <>
-              <section className="p-4 rounded-xl border border-(--border-sheet) bg-[var(--bg-subtle)]/60 space-y-3">
+              <section className="p-4 rounded-xl border border-(--border-sheet) bg-(--bg-subtle)/60 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-[var(--accent-base)] text-white font-mono text-[10px] flex items-center justify-center font-bold">
+                    <span className="w-5 h-5 rounded-full bg-(--accent-base) text-white font-mono text-[10px] flex items-center justify-center font-bold">
                       1
                     </span>
                     <span className="font-bold text-xs uppercase font-mono tracking-wider text-(--text-main)">
@@ -383,8 +383,8 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     onClick={() => setSyncScope("full")}
                     className={`p-2 rounded-lg border text-left cursor-pointer transition-all ${
                       syncScope === "full" ?
-                        "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
-                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        "bg-(--accent-soft) border-(--accent-border) text-(--accent-base) font-semibold"
+                      : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) hover:text-(--text-main)"
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5 mb-1" />
@@ -396,8 +396,8 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     onClick={() => setSyncScope("statement")}
                     className={`p-2 rounded-lg border text-left cursor-pointer transition-all ${
                       syncScope === "statement" ?
-                        "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
-                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        "bg-(--accent-soft) border-(--accent-border) text-(--accent-base) font-semibold"
+                      : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) hover:text-(--text-main)"
                     }`}
                   >
                     <FileText className="w-3.5 h-3.5 mb-1" />
@@ -409,8 +409,8 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     onClick={() => setSyncScope("benchmarks")}
                     className={`p-2 rounded-lg border text-left cursor-pointer transition-all ${
                       syncScope === "benchmarks" ?
-                        "bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--accent-base)] font-semibold"
-                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        "bg-(--accent-soft) border-(--accent-border) text-(--accent-base) font-semibold"
+                      : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) hover:text-(--text-main)"
                     }`}
                   >
                     <Activity className="w-3.5 h-3.5 mb-1" />
@@ -423,17 +423,17 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                   value={jobContext}
                   onChange={(e) => setJobContext(e.target.value)}
                   placeholder="Optional: Highlight technical specialties or engine domains (e.g. 'Emphasize Unreal Engine 5.4 PCG, compute HLSL, and Maya/Python pipelines')..."
-                  className="w-full text-xs font-mono p-2.5 rounded-lg bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-main)] focus:outline-none focus:border-[var(--accent-base)]"
+                  className="w-full text-xs font-mono p-2.5 rounded-lg bg-(--bg-sheet) border border-(--border-sheet) text-(--text-main) focus:outline-none focus:border-(--accent-base)"
                 />
 
                 <div className="flex items-center justify-between pt-1">
-                  <span className="text-[11px] text-[var(--text-muted)]">
+                  <span className="text-[11px] text-(--text-muted)">
                     Compatible with ChatGPT, Claude, Gemini &amp; DeepSeek
                   </span>
                   <button
                     type="button"
                     onClick={handleCopyPrompt}
-                    className="px-4 py-1.5 bg-[var(--accent-base)] hover:opacity-95 text-white font-semibold rounded-lg text-xs flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    className="px-4 py-1.5 bg-(--accent-base) hover:opacity-95 text-white font-semibold rounded-lg text-xs flex items-center gap-1.5 cursor-pointer shadow-xs"
                   >
                     {copiedPrompt ?
                       <>
@@ -449,20 +449,20 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                 </div>
               </section>
 
-              <section className="p-4 rounded-xl border border-[var(--border-sheet)] bg-[var(--bg-subtle)]/60 space-y-3">
+              <section className="p-4 rounded-xl border border-(--border-sheet) bg-(--bg-subtle)/60 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-[var(--accent-base)] text-white font-mono text-[10px] flex items-center justify-center font-bold">
+                    <span className="w-5 h-5 rounded-full bg-(--accent-base) text-white font-mono text-[10px] flex items-center justify-center font-bold">
                       2
                     </span>
-                    <span className="font-bold text-xs uppercase font-mono tracking-wider text-[var(--text-main)]">
+                    <span className="font-bold text-xs uppercase font-mono tracking-wider text-(--text-main)">
                       Apply AI Output
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={handlePasteFromClipboard}
-                    className="text-[11px] font-mono text-[var(--accent-base)] hover:underline flex items-center gap-1 cursor-pointer"
+                    className="text-[11px] font-mono text-(--accent-base) hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <ClipboardPaste className="w-3.5 h-3.5" />
                     <span>Paste Clipboard</span>
@@ -482,7 +482,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                     }
                   }}
                   placeholder="Paste the generated JSON response here..."
-                  className="w-full text-xs font-mono p-2.5 rounded-lg bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-main)] focus:outline-none focus:border-[var(--accent-base)]"
+                  className="w-full text-xs font-mono p-2.5 rounded-lg bg-(--bg-sheet) border border-(--border-sheet) text-(--text-main) focus:outline-none focus:border-(--accent-base)"
                 />
 
                 {pendingChanges && (
@@ -524,7 +524,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                       <button
                         type="button"
                         onClick={handleApply}
-                        className="w-full py-2 bg-[var(--accent-base)] hover:opacity-95 text-white font-semibold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-[0.99]"
+                        className="w-full py-2 bg-(--accent-base) hover:opacity-95 text-white font-semibold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-[0.99]"
                       >
                         <Check className="w-4 h-4" />
                         <span>Apply Updates to Document &amp; Archive Snapshot</span>
@@ -538,8 +538,8 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
 
           {activeTab === "history" && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between pb-1 border-b border-[var(--border-sheet)]">
-                <span className="font-bold text-[11px] uppercase tracking-wider text-[var(--text-muted)]">
+              <div className="flex items-center justify-between pb-1 border-b border-(--border-sheet)">
+                <span className="font-bold text-[11px] uppercase tracking-wider text-(--text-muted)">
                   Archived Document Snapshots
                 </span>
                 {history.length > 0 && (
@@ -551,7 +551,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                         safeStorage.removeItem("studio_dossier_history_v1");
                       }
                     }}
-                    className="text-[11px] text-[var(--text-faint)] hover:text-red-500 cursor-pointer"
+                    className="text-[11px] text-(--text-faint) hover:text-red-500 cursor-pointer"
                   >
                     Clear History
                   </button>
@@ -559,7 +559,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
               </div>
 
               {history.length === 0 ?
-                <div className="text-center py-8 text-[var(--text-muted)]">
+                <div className="text-center py-8 text-(--text-muted)">
                   No snapshots recorded yet. Updates applied via AI or manual saves are tracked
                   here.
                 </div>
@@ -567,16 +567,16 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                   {history.map((snap) => (
                     <div
                       key={snap.id}
-                      className="p-3 rounded-xl border border-[var(--border-sheet)] bg-[var(--bg-subtle)]/50 flex items-center justify-between gap-3 hover:bg-[var(--bg-subtle)] transition-colors"
+                      className="p-3 rounded-xl border border-(--border-sheet) bg-(--bg-subtle)/50 flex items-center justify-between gap-3 hover:bg-(--bg-subtle) transition-colors"
                     >
                       <div className="min-w-0">
-                        <div className="font-semibold text-xs text-[var(--text-main)] truncate">
+                        <div className="font-semibold text-xs text-(--text-main) truncate">
                           {snap.studio} · {snap.role}
                         </div>
-                        <div className="text-[11px] text-[var(--accent-base)] truncate font-mono">
+                        <div className="text-[11px] text-(--accent-base) truncate font-mono">
                           {snap.summary}
                         </div>
-                        <div className="text-[10px] text-[var(--text-faint)] font-mono">
+                        <div className="text-[10px] text-(--text-faint) font-mono">
                           {formatRelativeTime(snap.timestamp)}
                         </div>
                       </div>
@@ -587,7 +587,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                           onApplyData(snap.data);
                           onClose();
                         }}
-                        className="px-3 py-1 rounded-lg border border-[var(--border-sheet)] bg-[var(--bg-sheet)] hover:border-[var(--accent-base)] text-[var(--text-main)] font-semibold text-xs flex items-center gap-1 cursor-pointer transition-colors shrink-0"
+                        className="px-3 py-1 rounded-lg border border-(--border-sheet) bg-(--bg-sheet) hover:border-(--accent-base) text-(--text-main) font-semibold text-xs flex items-center gap-1 cursor-pointer transition-colors shrink-0"
                       >
                         <RotateCcw className="w-3 h-3" />
                         <span>Restore</span>
@@ -600,7 +600,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
           )}
         </div>
 
-        <footer className="px-5 py-3 border-t border-[var(--border-sheet)] bg-[var(--bg-subtle)] flex items-center justify-between shrink-0">
+        <footer className="px-5 py-3 border-t border-(--border-sheet) bg-(--bg-subtle) flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -615,13 +615,13 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
                 a.click();
                 URL.revokeObjectURL(url);
               }}
-              className="text-[11px] text-[var(--text-muted)] hover:text-[var(--text-main)] flex items-center gap-1 cursor-pointer"
+              className="text-[11px] text-(--text-muted) hover:text-(--text-main) flex items-center gap-1 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Export JSON</span>
             </button>
 
-            <label className="text-[11px] text-[var(--text-muted)] hover:text-[var(--text-main)] flex items-center gap-1 cursor-pointer">
+            <label className="text-[11px] text-(--text-muted) hover:text-(--text-main) flex items-center gap-1 cursor-pointer">
               <Upload className="w-3.5 h-3.5" />
               <span>Import JSON</span>
               <input
@@ -654,7 +654,7 @@ REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg border border-[var(--border-sheet)] bg-[var(--bg-sheet)] hover:bg-[var(--bg-muted)] text-[var(--text-main)] font-semibold text-xs cursor-pointer shadow-2xs"
+            className="px-4 py-1.5 rounded-lg border border-(--border-sheet) bg-(--bg-sheet) hover:bg-(--bg-muted) text-(--text-main) font-semibold text-xs cursor-pointer shadow-2xs"
           >
             Close
           </button>

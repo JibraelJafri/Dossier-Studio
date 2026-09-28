@@ -38,8 +38,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
           <span
             className={
               isEditorial ?
-                "font-serif italic text-lg text-[var(--accent-base)]"
-              : "font-mono text-xs font-bold text-[var(--accent-base)]"
+                "font-serif italic text-lg text-(--accent-base)"
+              : "font-mono text-xs font-bold text-(--accent-base)"
             }
           >
             <EditableText
@@ -51,8 +51,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
           <span
             className={
               isEditorial ?
-                "font-serif text-2xl sm:text-3xl font-medium tracking-tight text-[var(--text-main)]"
-              : "font-sans text-sm font-bold uppercase tracking-wider text-[var(--text-main)]"
+                "font-serif text-2xl sm:text-3xl font-medium tracking-tight text-(--text-main)"
+              : "font-sans text-sm font-bold uppercase tracking-wider text-(--text-main)"
             }
           >
             <EditableText
@@ -65,8 +65,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
         <span
           className={
             isEditorial ?
-              "font-serif italic text-xs text-[var(--text-faint)] sm:text-right"
-            : "font-mono text-[11px] text-[var(--text-faint)] sm:text-right"
+              "font-serif italic text-xs text-(--text-faint) sm:text-right"
+            : "font-mono text-[11px] text-(--text-faint) sm:text-right"
           }
         >
           <EditableText
@@ -86,8 +86,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
           disabled={disabled}
           className={
             isEditorial ?
-              "font-serif italic text-xl sm:text-2xl text-[var(--text-main)]"
-            : "font-sans font-semibold text-base text-[var(--text-main)]"
+              "font-serif italic text-xl sm:text-2xl text-(--text-main)"
+            : "font-sans font-semibold text-base text-(--text-main)"
           }
         />
       </div>
@@ -96,8 +96,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
       <div
         className={
           isEditorial ?
-            "font-serif text-[18px] sm:text-[19px] leading-[1.82] text-[var(--text-body)] tracking-normal"
-          : "font-sans text-[15px] sm:text-[15.5px] leading-[1.72] text-[var(--text-body)]"
+            "font-serif text-[18px] sm:text-[19px] leading-[1.82] text-(--text-body) tracking-normal"
+          : "font-sans text-[15px] sm:text-[15.5px] leading-[1.72] text-(--text-body)"
         }
       >
         {letter.paragraphs.map((p, idx) => (
@@ -118,7 +118,7 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
                   <button
                     type="button"
                     onClick={() => onRemoveParagraph(idx)}
-                    className="p-1 rounded text-[var(--text-faint)] hover:text-red-600 hover:bg-[var(--bg-subtle)] cursor-pointer relative before:absolute before:-inset-2 before:content-['']"
+                    className="p-1 rounded text-(--text-faint) hover:text-red-600 hover:bg-(--bg-subtle) cursor-pointer relative before:absolute before:-inset-2 before:content-['']"
                     title="Remove paragraph"
                     aria-label={`Remove paragraph ${idx + 1}`}
                   >
@@ -138,8 +138,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
                 aria-valuemax={36}
                 style={{ height: `${paragraphGap}px` }}
                 className={`relative w-full transition-colors flex items-center justify-center outline-none ${
-                  !disabled ? "cursor-ns-resize group/pargap focus-visible:ring-1 focus-visible:ring-[var(--accent-base)] rounded-xs" : ""
-                } ${activeGapIdx === idx ? "bg-[var(--accent-base)]/10" : ""}`}
+                  !disabled ? "cursor-ns-resize group/pargap focus-visible:ring-1 focus-visible:ring-(--accent-base) rounded-xs" : ""
+                } ${activeGapIdx === idx ? "bg-(--accent-base)/10" : ""}`}
                 onKeyDown={(e) => {
                   if (disabled || !onChangeParagraphGap) return;
                   if (e.key === "ArrowDown" || e.key === "ArrowRight") {
@@ -185,8 +185,8 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
                     className="absolute inset-0 flex items-center justify-center pointer-events-none no-print"
                     data-pdf-remove="true"
                   >
-                    <div className="w-full border-t border-dashed border-[var(--border-subtle)] opacity-0 group-hover/pargap:opacity-60 transition-opacity" />
-                    <span className="absolute px-1.5 py-0.2 rounded-full text-[8px] font-mono bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] opacity-0 group-hover/pargap:opacity-100 shadow-2xs transition-opacity">
+                    <div className="w-full border-t border-dashed border-(--border-subtle) opacity-0 group-hover/pargap:opacity-60 transition-opacity" />
+                    <span className="absolute px-1.5 py-0.2 rounded-full text-[8px] font-mono bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) opacity-0 group-hover/pargap:opacity-100 shadow-2xs transition-opacity">
                       ↕ {paragraphGap}px
                     </span>
                   </div>
@@ -202,19 +202,19 @@ export const StatementSection: React.FC<StatementSectionProps> = ({
           <button
             type="button"
             onClick={onAddParagraph}
-            className="text-xs font-mono text-[var(--text-faint)] hover:text-[var(--accent-base)] inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg border border-dashed border-[var(--border-sheet)] hover:border-[var(--accent-base)] transition-colors cursor-pointer"
+            className="text-xs font-mono text-(--text-faint) hover:text-(--accent-base) inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg border border-dashed border-(--border-sheet) hover:border-(--accent-base) transition-colors cursor-pointer"
             title="Add a new paragraph to the statement"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Strategic Paragraph</span>
           </button>
 
-          <span className="text-[11px] font-mono text-[var(--text-faint)] select-none hidden sm:inline-block">
+          <span className="text-[11px] font-mono text-(--text-faint) select-none hidden sm:inline-block">
             Markdown active:{" "}
-            <span className="text-[var(--text-muted)] font-semibold">**bold**</span> ·{" "}
-            <span className="text-[var(--text-muted)] italic">*italic*</span> ·{" "}
-            <span className="text-[var(--accent-base)] underline">[link](url)</span> ·{" "}
-            <span className="text-[var(--accent-base)] font-mono">`code`</span>
+            <span className="text-(--text-muted) font-semibold">**bold**</span> ·{" "}
+            <span className="text-(--text-muted) italic">*italic*</span> ·{" "}
+            <span className="text-(--accent-base) underline">[link](url)</span> ·{" "}
+            <span className="text-(--accent-base) font-mono">`code`</span>
           </span>
         </div>
       )}

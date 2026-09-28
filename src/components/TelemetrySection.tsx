@@ -48,7 +48,7 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
           <button
             type="button"
             onClick={handleHide}
-            className="p-1.5 rounded-md bg-[var(--bg-sheet)]/95 backdrop-blur-xs border border-[var(--border-sheet)] shadow-xs text-[var(--text-faint)] hover:text-[var(--text-main)] hover:border-[var(--accent-base)] cursor-pointer flex items-center justify-center"
+            className="p-1.5 rounded-md bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) shadow-xs text-(--text-faint) hover:text-(--text-main) hover:border-(--accent-base) cursor-pointer flex items-center justify-center"
             title="Hide Benchmarks & Telemetry Section"
             aria-label="Hide Telemetry Section"
           >
@@ -63,8 +63,8 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
           <span
             className={
               isEditorial ?
-                "font-serif italic text-lg text-[var(--accent-base)]"
-              : "font-mono text-xs font-bold text-[var(--accent-base)]"
+                "font-serif italic text-lg text-(--accent-base)"
+              : "font-mono text-xs font-bold text-(--accent-base)"
             }
           >
             <EditableText
@@ -76,8 +76,8 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
           <span
             className={
               isEditorial ?
-                "font-serif text-2xl sm:text-3xl font-medium tracking-tight text-[var(--text-main)]"
-              : "font-sans text-sm font-bold uppercase tracking-wider text-[var(--text-main)]"
+                "font-serif text-2xl sm:text-3xl font-medium tracking-tight text-(--text-main)"
+              : "font-sans text-sm font-bold uppercase tracking-wider text-(--text-main)"
             }
           >
             <EditableText
@@ -91,8 +91,8 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
         <span
           className={
             isEditorial ?
-              "font-serif italic text-xs text-[var(--text-faint)] sm:text-right"
-            : "font-mono text-[11px] text-[var(--text-faint)] sm:text-right"
+              "font-serif italic text-xs text-(--text-faint) sm:text-right"
+            : "font-mono text-[11px] text-(--text-faint) sm:text-right"
           }
         >
           <EditableText
@@ -108,14 +108,14 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
         {metrics.map((m, idx) => (
           <div
             key={idx}
-            className="group/card relative bg-[var(--bg-subtle)]/50 rounded-2xl p-5 sm:p-6 transition-all duration-200 hover:bg-[var(--bg-subtle)]/80 flex flex-col justify-between"
+            className="group/card relative bg-(--bg-subtle)/50 rounded-2xl p-5 sm:p-6 transition-all duration-200 hover:bg-(--bg-subtle)/80 flex flex-col justify-between"
           >
             {/* Out-of-flow Delete Action */}
             {!disabled && metrics.length > 1 && (
               <button
                 type="button"
                 onClick={() => onRemoveMetric(idx)}
-                className="absolute top-3.5 right-3.5 p-1 rounded-md text-[var(--text-faint)] hover:text-red-600 hover:bg-[var(--bg-sheet)] border border-transparent hover:border-[var(--border-subtle)] opacity-0 group-hover/card:opacity-100 transition-all duration-150 cursor-pointer no-print z-20 shadow-2xs"
+                className="absolute top-3.5 right-3.5 p-1 rounded-md text-(--text-faint) hover:text-red-600 hover:bg-(--bg-sheet) border border-transparent hover:border-(--border-subtle) opacity-0 group-hover/card:opacity-100 transition-all duration-150 cursor-pointer no-print z-20 shadow-2xs"
                 title="Remove metric card"
                 aria-label={`Remove metric card ${idx + 1}`}
               >
@@ -131,8 +131,8 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
                   disabled={disabled}
                   className={
                     isEditorial ?
-                      "text-4xl sm:text-5xl font-light tracking-tight tabular-nums text-[var(--text-main)] leading-none whitespace-nowrap block"
-                    : "text-3xl sm:text-4xl font-extrabold tracking-tight tabular-nums text-[var(--text-main)] leading-none whitespace-nowrap block"
+                      "text-4xl sm:text-5xl font-light tracking-tight tabular-nums text-(--text-main) leading-none whitespace-nowrap block"
+                    : "text-3xl sm:text-4xl font-extrabold tracking-tight tabular-nums text-(--text-main) leading-none whitespace-nowrap block"
                   }
                 />
               </div>
@@ -140,8 +140,8 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
               <div
                 className={
                   isEditorial ?
-                    "font-serif italic text-base text-[var(--accent-base)] font-medium leading-snug"
-                  : "text-xs font-semibold text-[var(--accent-base)] uppercase tracking-wide leading-snug"
+                    "font-serif italic text-base text-(--accent-base) font-medium leading-snug"
+                  : "text-xs font-semibold text-(--accent-base) uppercase tracking-wide leading-snug"
                 }
               >
                 <EditableText
@@ -153,7 +153,7 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
             </div>
 
             <div
-              className={`pt-3 text-[var(--text-muted)] ${
+              className={`pt-3 text-(--text-muted) ${
                 isEditorial ? "font-serif text-sm leading-relaxed" : "text-xs leading-relaxed"
               }`}
             >
@@ -173,7 +173,7 @@ export const TelemetrySection: React.FC<TelemetrySectionProps> = ({
           <button
             type="button"
             onClick={onAddMetric}
-            className="text-xs font-mono text-[var(--text-faint)] hover:text-[var(--accent-base)] inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg border border-dashed border-[var(--border-sheet)] hover:border-[var(--accent-base)] transition-colors cursor-pointer"
+            className="text-xs font-mono text-(--text-faint) hover:text-(--accent-base) inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg border border-dashed border-(--border-sheet) hover:border-(--accent-base) transition-colors cursor-pointer"
             title="Add a new telemetry benchmark card"
           >
             <Plus className="w-3.5 h-3.5" />

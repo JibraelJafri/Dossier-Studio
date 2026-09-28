@@ -233,7 +233,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-md z-[110] flex items-center justify-center p-3 sm:p-6 no-print overflow-y-auto"
+      className="fixed inset-0 bg-black/80 backdrop-blur-md z-110 flex items-center justify-center p-3 sm:p-6 no-print overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="atelier-modal-title"
@@ -245,27 +245,27 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
         ref={modalContainerRef}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className="bg-[var(--bg-sheet)] border border-[var(--border-sheet)] rounded-3xl w-full max-w-4xl shadow-2xl flex flex-col overflow-hidden transition-all my-auto max-h-[92vh] text-xs focus:outline-none"
+        className="bg-(--bg-sheet) border border-(--border-sheet) rounded-3xl w-full max-w-4xl shadow-2xl flex flex-col overflow-hidden transition-all my-auto max-h-[92vh] text-xs focus:outline-none"
       >
-        <header className="px-6 py-4 border-b border-[var(--border-sheet)] flex items-center justify-between bg-[var(--bg-subtle)]/70 shrink-0">
+        <header className="px-6 py-4 border-b border-(--border-sheet) flex items-center justify-between bg-(--bg-subtle)/70 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-[var(--accent-base)] flex items-center justify-center text-white shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-(--accent-base) flex items-center justify-center text-white shadow-xs">
               <Download className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2
                   id="atelier-modal-title"
-                  className="font-bold text-sm text-[var(--text-main)] tracking-tight leading-tight"
+                  className="font-bold text-sm text-(--text-main) tracking-tight leading-tight"
                 >
                   Studio Export Atelier
                 </h2>
-                <span className="font-mono text-[9px] uppercase tracking-wider bg-[var(--bg-sheet)] px-2 py-0.5 rounded-full border border-[var(--border-sheet)] text-[var(--text-muted)] font-semibold flex items-center gap-1">
+                <span className="font-mono text-[9px] uppercase tracking-wider bg-(--bg-sheet) px-2 py-0.5 rounded-full border border-(--border-sheet) text-(--text-muted) font-semibold flex items-center gap-1">
                   <FileCheck2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                   <span>Selectable Text Engine Active</span>
                 </span>
               </div>
-              <p className="text-[11px] text-[var(--text-muted)]">
+              <p className="text-[11px] text-(--text-muted)">
                 {applicantName} · Re: {studioName} ({roleName})
               </p>
             </div>
@@ -275,7 +275,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
             type="button"
             disabled={isExporting}
             onClick={onClose}
-            className="text-[var(--text-muted)] hover:text-[var(--text-main)] p-2 rounded-xl bg-[var(--bg-sheet)] border border-[var(--border-sheet)] hover:border-[var(--accent-base)] transition-colors cursor-pointer flex items-center justify-center shadow-2xs disabled:opacity-40"
+            className="text-(--text-muted) hover:text-(--text-main) p-2 rounded-xl bg-(--bg-sheet) border border-(--border-sheet) hover:border-(--accent-base) transition-colors cursor-pointer flex items-center justify-center shadow-2xs disabled:opacity-40"
             aria-label="Close panel"
           >
             <X className="w-4 h-4" />
@@ -283,13 +283,13 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 flex-1 overflow-y-auto min-h-0">
-          <aside className="lg:col-span-5 bg-[var(--bg-subtle)]/90 border-b lg:border-b-0 lg:border-r border-[var(--border-sheet)] p-6 flex flex-col items-center justify-between gap-4 select-none relative">
-            <div className="w-full flex items-center justify-between text-[10px] font-mono text-[var(--text-faint)]">
-              <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--text-main)] uppercase tracking-wider">
+          <aside className="lg:col-span-5 bg-(--bg-subtle)/90 border-b lg:border-b-0 lg:border-r border-(--border-sheet) p-6 flex flex-col items-center justify-between gap-4 select-none relative">
+            <div className="w-full flex items-center justify-between text-[10px] font-mono text-(--text-faint)">
+              <span className="inline-flex items-center gap-1.5 font-semibold text-(--text-main) uppercase tracking-wider">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Live Output Specimen
               </span>
-              <span className="px-2 py-0.5 rounded-full bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)]">
+              <span className="px-2 py-0.5 rounded-full bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted)">
                 {format === "digital-folio"
                   ? "210 mm Width"
                   : isA4
@@ -299,8 +299,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
             </div>
 
             <div className="relative w-full flex flex-col items-center justify-center my-auto">
-              <div className="mb-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[10px] font-mono text-[var(--text-muted)] shadow-2xs flex items-center gap-1.5">
-                <span className="text-[var(--accent-base)] font-bold">
+              <div className="mb-2 px-2.5 py-0.5 rounded-full bg-(--bg-sheet) border border-(--border-sheet) text-[10px] font-mono text-(--text-muted) shadow-2xs flex items-center gap-1.5">
+                <span className="text-(--accent-base) font-bold">
                   {format === "digital-folio"
                     ? `210 × ${continuousHeightMm} mm`
                     : `${paperWidthMm} × ${paperHeightMm} mm`}
@@ -369,18 +369,18 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                 </div>
 
                 {format !== "digital-folio" && paginationMode === "fit-single" && (
-                  <div className="absolute bottom-2 inset-x-2 px-2 py-1 rounded-lg bg-[var(--accent-base)] text-white text-center font-mono text-[8.5px] font-bold shadow-md z-30 flex items-center justify-center gap-1.5">
-                    <Check className="w-3 h-3 stroke-[3]" />
+                  <div className="absolute bottom-2 inset-x-2 px-2 py-1 rounded-lg bg-(--accent-base) text-white text-center font-mono text-[8.5px] font-bold shadow-md z-30 flex items-center justify-center gap-1.5">
+                    <Check className="w-3 h-3 stroke-3" />
                     <span>Calibrated Single-Sheet Compression</span>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="w-full grid grid-cols-3 gap-2 text-center pt-2 border-t border-[var(--border-sheet)] text-[10.5px] font-mono">
-              <div className="p-2 rounded-xl bg-[var(--bg-sheet)] border border-[var(--border-sheet)]">
-                <div className="text-[9px] text-[var(--text-faint)] uppercase">Format</div>
-                <div className="font-semibold text-[var(--text-main)] truncate mt-0.5">
+            <div className="w-full grid grid-cols-3 gap-2 text-center pt-2 border-t border-(--border-sheet) text-[10.5px] font-mono">
+              <div className="p-2 rounded-xl bg-(--bg-sheet) border border-(--border-sheet)">
+                <div className="text-[9px] text-(--text-faint) uppercase">Format</div>
+                <div className="font-semibold text-(--text-main) truncate mt-0.5">
                   {format === "digital-folio"
                     ? "1 Monolithic"
                     : paginationMode === "fit-single"
@@ -389,9 +389,9 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-2 rounded-xl bg-[var(--bg-sheet)] border border-[var(--border-sheet)]">
-                <div className="text-[9px] text-[var(--text-faint)] uppercase">Density</div>
-                <div className="font-semibold text-[var(--text-main)] mt-0.5">
+              <div className="p-2 rounded-xl bg-(--bg-sheet) border border-(--border-sheet)">
+                <div className="text-[9px] text-(--text-faint) uppercase">Density</div>
+                <div className="font-semibold text-(--text-main) mt-0.5">
                   {quality === "ultra"
                     ? "300 DPI"
                     : quality === "high"
@@ -400,9 +400,9 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-2 rounded-xl bg-[var(--bg-sheet)] border border-[var(--border-sheet)]">
-                <div className="text-[9px] text-[var(--text-faint)] uppercase">Payload</div>
-                <div className="font-semibold text-[var(--accent-base)] mt-0.5">
+              <div className="p-2 rounded-xl bg-(--bg-sheet) border border-(--border-sheet)">
+                <div className="text-[9px] text-(--text-faint) uppercase">Payload</div>
+                <div className="font-semibold text-(--accent-base) mt-0.5">
                   {payloadEstimate}
                 </div>
               </div>
@@ -411,9 +411,9 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
 
           <main className="lg:col-span-7 p-6 space-y-5 overflow-y-auto">
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-[10.5px] font-mono uppercase tracking-wider text-[var(--text-faint)]">
+              <div className="flex items-center justify-between text-[10.5px] font-mono uppercase tracking-wider text-(--text-faint)">
                 <span>1. Delivery Destination</span>
-                <span className="text-[var(--accent-base)] font-sans lowercase font-medium">
+                <span className="text-(--accent-base) font-sans lowercase font-medium">
                   {format === "digital-folio" ? "screen & ats primary" : "paper-calibrated"}
                 </span>
               </div>
@@ -424,8 +424,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                   onClick={() => handleSelectFormat("digital-folio")}
                   className={`p-3.5 rounded-2xl border text-left cursor-pointer transition-all flex flex-col justify-between relative ${
                     format === "digital-folio"
-                      ? "bg-[var(--accent-soft)] border-[var(--accent-base)] text-[var(--text-main)] shadow-xs ring-1 ring-[var(--accent-base)]"
-                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-body)] hover:border-[var(--text-muted)]"
+                      ? "bg-(--accent-soft) border-(--accent-base) text-(--text-main) shadow-xs ring-1 ring-(--accent-base)"
+                      : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-body) hover:border-(--text-muted)"
                   }`}
                 >
                   <div className="flex items-center justify-between w-full pb-1">
@@ -433,26 +433,26 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                       <Globe
                         className={`w-4 h-4 ${
                           format === "digital-folio"
-                            ? "text-[var(--accent-base)]"
-                            : "text-[var(--text-muted)]"
+                            ? "text-(--accent-base)"
+                            : "text-(--text-muted)"
                         }`}
                       />
                       <span>Digital Folio</span>
                     </div>
                     {format === "digital-folio" ? (
-                      <span className="w-4 h-4 rounded-full bg-[var(--accent-base)] text-white flex items-center justify-center shadow-xs">
-                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                      <span className="w-4 h-4 rounded-full bg-(--accent-base) text-white flex items-center justify-center shadow-xs">
+                        <Check className="w-2.5 h-2.5 stroke-3" />
                       </span>
                     ) : (
-                      <span className="text-[9px] font-mono text-[var(--text-faint)] uppercase">
+                      <span className="text-[9px] font-mono text-(--text-faint) uppercase">
                         Continuous
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mt-1">
+                  <p className="text-[11px] text-(--text-muted) leading-relaxed mt-1">
                     Continuous single-sheet PDF. Zero page cuts. Tightly hugs content with no artificial bottom space.
                   </p>
-                  <div className="mt-2.5 text-[9.5px] font-mono text-[var(--text-faint)] flex items-center gap-1.5">
+                  <div className="mt-2.5 text-[9.5px] font-mono text-(--text-faint) flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                     <span>Exact Height ({continuousHeightMm} mm)</span>
                   </div>
@@ -463,8 +463,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                   onClick={() => handleSelectFormat("a4")}
                   className={`p-3.5 rounded-2xl border text-left cursor-pointer transition-all flex flex-col justify-between relative ${
                     format !== "digital-folio"
-                      ? "bg-[var(--accent-soft)] border-[var(--accent-base)] text-[var(--text-main)] shadow-xs ring-1 ring-[var(--accent-base)]"
-                      : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-body)] hover:border-[var(--text-muted)]"
+                      ? "bg-(--accent-soft) border-(--accent-base) text-(--text-main) shadow-xs ring-1 ring-(--accent-base)"
+                      : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-body) hover:border-(--text-muted)"
                   }`}
                 >
                   <div className="flex items-center justify-between w-full pb-1">
@@ -472,26 +472,26 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                       <Printer
                         className={`w-4 h-4 ${
                           format !== "digital-folio"
-                            ? "text-[var(--accent-base)]"
-                            : "text-[var(--text-muted)]"
+                            ? "text-(--accent-base)"
+                            : "text-(--text-muted)"
                         }`}
                       />
                       <span>Standard Paper</span>
                     </div>
                     {format !== "digital-folio" ? (
-                      <span className="w-4 h-4 rounded-full bg-[var(--accent-base)] text-white flex items-center justify-center shadow-xs">
-                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                      <span className="w-4 h-4 rounded-full bg-(--accent-base) text-white flex items-center justify-center shadow-xs">
+                        <Check className="w-2.5 h-2.5 stroke-3" />
                       </span>
                     ) : (
-                      <span className="text-[9px] font-mono text-[var(--text-faint)] uppercase">
+                      <span className="text-[9px] font-mono text-(--text-faint) uppercase">
                         A4 / Letter
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed mt-1">
+                  <p className="text-[11px] text-(--text-muted) leading-relaxed mt-1">
                     Calibrated physical paper geometry for desk printing, executive binders, or institutional requirements.
                   </p>
-                  <div className="mt-2.5 text-[9.5px] font-mono text-[var(--text-faint)] flex items-center gap-1.5">
+                  <div className="mt-2.5 text-[9.5px] font-mono text-(--text-faint) flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                     <span>Physical Sheet Sizing</span>
                   </div>
@@ -500,20 +500,20 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
             </div>
 
             {format !== "digital-folio" && (
-              <div className="p-4 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-sheet)] space-y-3 animate-in fade-in zoom-in-95 duration-150">
+              <div className="p-4 rounded-2xl bg-(--bg-subtle) border border-(--border-sheet) space-y-3 animate-in fade-in zoom-in-95 duration-150">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono uppercase text-[var(--text-faint)] block mb-1">
+                    <label className="text-[10px] font-mono uppercase text-(--text-faint) block mb-1">
                       Paper Standard
                     </label>
-                    <div className="flex bg-[var(--bg-sheet)] p-0.5 rounded-xl border border-[var(--border-sheet)]">
+                    <div className="flex bg-(--bg-sheet) p-0.5 rounded-xl border border-(--border-sheet)">
                       <button
                         type="button"
                         onClick={() => setFormat("a4")}
                         className={`flex-1 py-1.5 text-center font-medium text-[11px] rounded-lg transition-all cursor-pointer ${
                           format === "a4"
-                            ? "bg-[var(--accent-base)] text-white shadow-2xs font-semibold"
-                            : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                            ? "bg-(--accent-base) text-white shadow-2xs font-semibold"
+                            : "text-(--text-muted) hover:text-(--text-main)"
                         }`}
                       >
                         A4 (210×297)
@@ -523,8 +523,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                         onClick={() => setFormat("letter")}
                         className={`flex-1 py-1.5 text-center font-medium text-[11px] rounded-lg transition-all cursor-pointer ${
                           format === "letter"
-                            ? "bg-[var(--accent-base)] text-white shadow-2xs font-semibold"
-                            : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                            ? "bg-(--accent-base) text-white shadow-2xs font-semibold"
+                            : "text-(--text-muted) hover:text-(--text-main)"
                         }`}
                       >
                         Letter (8.5×11&quot;)
@@ -533,17 +533,17 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-mono uppercase text-[var(--text-faint)] block mb-1">
+                    <label className="text-[10px] font-mono uppercase text-(--text-faint) block mb-1">
                       Pagination Logic
                     </label>
-                    <div className="flex bg-[var(--bg-sheet)] p-0.5 rounded-xl border border-[var(--border-sheet)]">
+                    <div className="flex bg-(--bg-sheet) p-0.5 rounded-xl border border-(--border-sheet)">
                       <button
                         type="button"
                         onClick={() => setPaginationMode("fit-single")}
                         className={`flex-1 py-1.5 text-center font-medium text-[11px] rounded-lg transition-all cursor-pointer ${
                           paginationMode === "fit-single"
-                            ? "bg-[var(--accent-base)] text-white shadow-2xs font-semibold"
-                            : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                            ? "bg-(--accent-base) text-white shadow-2xs font-semibold"
+                            : "text-(--text-muted) hover:text-(--text-main)"
                         }`}
                         title="Scales composition down proportionally to guarantee 1 physical page"
                       >
@@ -554,8 +554,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                         onClick={() => setPaginationMode("multi-page")}
                         className={`flex-1 py-1.5 text-center font-medium text-[11px] rounded-lg transition-all cursor-pointer ${
                           paginationMode === "multi-page"
-                            ? "bg-[var(--accent-base)] text-white shadow-2xs font-semibold"
-                            : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                            ? "bg-(--accent-base) text-white shadow-2xs font-semibold"
+                            : "text-(--text-muted) hover:text-(--text-main)"
                         }`}
                         title="Divides document into sequential pages at exact paper height seams"
                       >
@@ -569,23 +569,23 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div className="space-y-1.5">
-                <label className="text-[10.5px] font-mono uppercase tracking-wider text-[var(--text-faint)] block">
+                <label className="text-[10.5px] font-mono uppercase tracking-wider text-(--text-faint) block">
                   2. Color Palette
                 </label>
-                <div className="flex bg-[var(--bg-subtle)] p-0.5 rounded-xl border border-[var(--border-sheet)] min-w-0">
+                <div className="flex bg-(--bg-subtle) p-0.5 rounded-xl border border-(--border-sheet) min-w-0">
                   <button
                     type="button"
                     onClick={() => setThemeMode("current")}
                     className={`flex-1 py-1.5 px-2.5 rounded-lg font-medium text-[10.5px] flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                       themeMode === "current"
-                        ? "bg-[var(--bg-sheet)] text-[var(--text-main)] shadow-2xs font-semibold"
-                        : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        ? "bg-(--bg-sheet) text-(--text-main) shadow-2xs font-semibold"
+                        : "text-(--text-muted) hover:text-(--text-main)"
                     }`}
                   >
                     {isDark ? (
                       <Moon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     ) : (
-                      <Palette className="w-3.5 h-3.5 text-[var(--accent-base)] shrink-0" />
+                      <Palette className="w-3.5 h-3.5 text-(--accent-base) shrink-0" />
                     )}
                     <span className="truncate">{isDark ? "Obsidian Dark" : "Editorial"}</span>
                   </button>
@@ -594,8 +594,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                     onClick={() => setThemeMode("force-light")}
                     className={`flex-1 py-1.5 px-2.5 rounded-lg font-medium text-[10.5px] flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                       themeMode === "force-light"
-                        ? "bg-[var(--bg-sheet)] text-[var(--text-main)] shadow-2xs font-semibold"
-                        : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        ? "bg-(--bg-sheet) text-(--text-main) shadow-2xs font-semibold"
+                        : "text-(--text-muted) hover:text-(--text-main)"
                     }`}
                     title="Inverts dark backgrounds to pure white paper for printing"
                   >
@@ -606,17 +606,17 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10.5px] font-mono uppercase tracking-wider text-[var(--text-faint)] block">
+                <label className="text-[10.5px] font-mono uppercase tracking-wider text-(--text-faint) block">
                   3. Raster Density
                 </label>
-                <div className="flex bg-[var(--bg-subtle)] p-0.5 rounded-xl border border-[var(--border-sheet)]">
+                <div className="flex bg-(--bg-subtle) p-0.5 rounded-xl border border-(--border-sheet)">
                   <button
                     type="button"
                     onClick={() => setQuality("standard")}
                     className={`flex-1 py-1.5 text-center rounded-lg font-medium text-[10.5px] transition-all cursor-pointer whitespace-nowrap ${
                       quality === "standard"
-                        ? "bg-[var(--bg-sheet)] text-[var(--text-main)] shadow-2xs font-semibold"
-                        : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        ? "bg-(--bg-sheet) text-(--text-main) shadow-2xs font-semibold"
+                        : "text-(--text-muted) hover:text-(--text-main)"
                     }`}
                     title="150 DPI. Lightweight payload (~1.2 MB)"
                   >
@@ -627,8 +627,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                     onClick={() => setQuality("high")}
                     className={`flex-1 py-1.5 text-center rounded-lg font-medium text-[10.5px] transition-all cursor-pointer whitespace-nowrap ${
                       quality === "high"
-                        ? "bg-[var(--bg-sheet)] text-[var(--text-main)] shadow-2xs font-semibold"
-                        : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        ? "bg-(--bg-sheet) text-(--text-main) shadow-2xs font-semibold"
+                        : "text-(--text-muted) hover:text-(--text-main)"
                     }`}
                     title="220 DPI. Crisp retina text (~2.2 MB). Recommended."
                   >
@@ -639,8 +639,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                     onClick={() => setQuality("ultra")}
                     className={`flex-1 py-1.5 text-center rounded-lg font-medium text-[10.5px] transition-all cursor-pointer whitespace-nowrap ${
                       quality === "ultra"
-                        ? "bg-[var(--bg-sheet)] text-[var(--text-main)] shadow-2xs font-semibold"
-                        : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                        ? "bg-(--bg-sheet) text-(--text-main) shadow-2xs font-semibold"
+                        : "text-(--text-muted) hover:text-(--text-main)"
                     }`}
                     title="300 DPI. Publication-grade clarity (~4.1 MB)"
                   >
@@ -650,14 +650,14 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-sheet)] space-y-2.5">
+            <div className="p-3.5 rounded-2xl bg-(--bg-subtle) border border-(--border-sheet) space-y-2.5">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5 pr-3">
-                  <div className="font-semibold text-xs text-[var(--text-main)] flex items-center gap-1.5">
-                    <ExternalLink className="w-3.5 h-3.5 text-[var(--accent-base)]" />
+                  <div className="font-semibold text-xs text-(--text-main) flex items-center gap-1.5">
+                    <ExternalLink className="w-3.5 h-3.5 text-(--accent-base)" />
                     <span>Embed Clickable Link Annotations</span>
                   </div>
-                  <p className="text-[11px] text-[var(--text-muted)]">
+                  <p className="text-[11px] text-(--text-muted)">
                     Generates native PDF web links for portfolio, email, phone, and ArtStation.
                   </p>
                 </div>
@@ -665,23 +665,23 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                   type="checkbox"
                   checked={embedLinks}
                   onChange={(e) => setEmbedLinks(e.target.checked)}
-                  className="accent-[var(--accent-base)] w-4 h-4 cursor-pointer shrink-0"
+                  className="accent-(--accent-base) w-4 h-4 cursor-pointer shrink-0"
                 />
               </div>
 
-              <div className="pt-2 border-t border-[var(--border-sheet)] flex items-center gap-2 text-[10.5px] text-emerald-700 dark:text-emerald-400 font-mono">
+              <div className="pt-2 border-t border-(--border-sheet) flex items-center gap-2 text-[10.5px] text-emerald-700 dark:text-emerald-400 font-mono">
                 <Check className="w-3.5 h-3.5 shrink-0" />
                 <span>Dual-layer line-clustered text active (ATS &amp; search indexed)</span>
               </div>
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center justify-between text-[10.5px] font-mono uppercase tracking-wider text-[var(--text-faint)]">
+              <div className="flex items-center justify-between text-[10.5px] font-mono uppercase tracking-wider text-(--text-faint)">
                 <span>Output Filename</span>
                 <button
                   type="button"
                   onClick={() => setFilename(defaultFilename)}
-                  className="text-[10px] text-[var(--accent-base)] hover:underline cursor-pointer flex items-center gap-1"
+                  className="text-[10px] text-(--accent-base) hover:underline cursor-pointer flex items-center gap-1"
                 >
                   <RotateCcw className="w-2.5 h-2.5" />
                   <span>Reset Default</span>
@@ -691,7 +691,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                 type="text"
                 value={filename}
                 onChange={(e) => setFilename(e.target.value)}
-                className="w-full px-3.5 py-2 bg-[var(--bg-sheet)] border border-[var(--border-sheet)] rounded-xl font-mono text-xs text-[var(--text-main)] outline-none focus:border-[var(--accent-base)] focus:ring-1 focus:ring-[var(--accent-base)]"
+                className="w-full px-3.5 py-2 bg-(--bg-sheet) border border-(--border-sheet) rounded-xl font-mono text-xs text-(--text-main) outline-none focus:border-(--accent-base) focus:ring-1 focus:ring-(--accent-base)"
               />
             </div>
 
@@ -703,14 +703,14 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
           </main>
         </div>
 
-        <footer className="px-6 py-3.5 border-t border-[var(--border-sheet)] bg-[var(--bg-subtle)]/70 flex items-center justify-between shrink-0">
-          <div className="text-[11px] font-mono text-[var(--text-faint)] hidden sm:flex items-center gap-2">
-            <span className="flex items-center gap-1 text-[var(--text-muted)]">
-              <kbd className="px-1.5 py-0.5 rounded bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[10px]">
+        <footer className="px-6 py-3.5 border-t border-(--border-sheet) bg-(--bg-subtle)/70 flex items-center justify-between shrink-0">
+          <div className="text-[11px] font-mono text-(--text-faint) hidden sm:flex items-center gap-2">
+            <span className="flex items-center gap-1 text-(--text-muted)">
+              <kbd className="px-1.5 py-0.5 rounded bg-(--bg-sheet) border border-(--border-sheet) text-[10px]">
                 ⌘
               </kbd>
               <span>+</span>
-              <kbd className="px-1.5 py-0.5 rounded bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[10px]">
+              <kbd className="px-1.5 py-0.5 rounded bg-(--bg-sheet) border border-(--border-sheet) text-[10px]">
                 Enter
               </kbd>
             </span>
@@ -722,7 +722,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
               type="button"
               disabled={isExporting}
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-[var(--border-sheet)] bg-[var(--bg-sheet)] hover:bg-[var(--bg-muted)] text-[var(--text-main)] font-medium text-xs cursor-pointer transition-colors disabled:opacity-40"
+              className="px-4 py-2 rounded-xl border border-(--border-sheet) bg-(--bg-sheet) hover:bg-(--bg-muted) text-(--text-main) font-medium text-xs cursor-pointer transition-colors disabled:opacity-40"
             >
               Cancel
             </button>
@@ -731,7 +731,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
               type="button"
               disabled={isExporting}
               onClick={handleExecute}
-              className="px-6 py-2 rounded-xl bg-[var(--accent-base)] hover:opacity-95 text-white font-semibold text-xs flex items-center gap-2 cursor-pointer transition-all shadow-sm disabled:opacity-50 active:scale-[0.98]"
+              className="px-6 py-2 rounded-xl bg-(--accent-base) hover:opacity-95 text-white font-semibold text-xs flex items-center gap-2 cursor-pointer transition-all shadow-sm disabled:opacity-50 active:scale-[0.98]"
             >
               {isExporting ? (
                 <>

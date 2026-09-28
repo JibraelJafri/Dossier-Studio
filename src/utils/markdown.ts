@@ -58,7 +58,7 @@ export function parseMarkdown(text: string): string {
   return chunks
     .map((chunk) => {
       if (chunk.type === "code") {
-        return `<code class="font-mono text-[0.88em] px-1.5 py-0.5 rounded bg-[var(--bg-subtle)] text-[var(--accent-base)] border border-[var(--border-sheet)] font-medium">${escapeHtml(
+        return `<code class="font-mono text-[0.88em] px-1.5 py-0.5 rounded bg-(--bg-subtle) text-(--accent-base) border border-(--border-sheet) font-medium">${escapeHtml(
           chunk.content,
         )}</code>`;
       }
@@ -78,7 +78,7 @@ export function parseMarkdown(text: string): string {
       // Bold (**text** or __text__)
       formatted = formatted.replace(
         /(\*\*|__)(.+?)\1/g,
-        '<strong class="font-semibold text-[var(--text-main)]">$2</strong>',
+        '<strong class="font-semibold text-(--text-main)">$2</strong>',
       );
 
       // Italic (*text* or word-boundary protected _text_)

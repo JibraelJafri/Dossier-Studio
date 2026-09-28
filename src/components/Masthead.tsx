@@ -45,8 +45,8 @@ export const Masthead: React.FC<MastheadProps> = ({
               <span
                 className={`inline-block text-[11px] ${
                   isEditorial ?
-                    "font-serif italic text-xs tracking-wide text-[var(--text-faint)]"
-                  : "font-mono uppercase tracking-wider text-[var(--text-faint)]"
+                    "font-serif italic text-xs tracking-wide text-(--text-faint)"
+                  : "font-mono uppercase tracking-wider text-(--text-faint)"
                 }`}
               >
                 <EditableText
@@ -55,7 +55,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                   }
                   onChange={(val) => onUpdateApplicant("dossierKicker", val)}
                   disabled={disabled}
-                  className="hover:text-[var(--text-main)] transition-colors"
+                  className="hover:text-(--text-main) transition-colors"
                 />
               </span>
 
@@ -64,7 +64,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                   <button
                     type="button"
                     onClick={onToggleHeaderKicker}
-                    className="p-1 rounded-md bg-[var(--bg-sheet)]/95 backdrop-blur-xs border border-[var(--border-sheet)] shadow-xs text-[var(--text-faint)] hover:text-[var(--text-main)] hover:border-[var(--accent-base)] cursor-pointer flex items-center justify-center"
+                    className="p-1 rounded-md bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) shadow-xs text-(--text-faint) hover:text-(--text-main) hover:border-(--accent-base) cursor-pointer flex items-center justify-center"
                     title="Hide header kicker"
                     aria-label="Hide header kicker"
                   >
@@ -83,8 +83,8 @@ export const Masthead: React.FC<MastheadProps> = ({
               disabled={disabled}
               className={
                 isEditorial ?
-                  "font-serif text-4xl sm:text-5xl lg:text-[48px] font-normal tracking-tight text-[var(--text-main)] leading-[1.08] block"
-                : "font-sans text-3xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-[var(--text-main)] leading-[1.1] block"
+                  "font-serif text-4xl sm:text-5xl lg:text-[48px] font-normal tracking-tight text-(--text-main) leading-[1.08] block"
+                : "font-sans text-3xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-(--text-main) leading-[1.1] block"
               }
             />
 
@@ -95,21 +95,21 @@ export const Masthead: React.FC<MastheadProps> = ({
               disabled={disabled}
               className={
                 isEditorial ?
-                  "font-serif italic text-lg sm:text-[21px] text-[var(--accent-base)] tracking-normal mt-2.5 sm:mt-3 font-medium block"
-                : "font-sans text-base sm:text-[18px] font-semibold text-[var(--accent-base)] tracking-tight mt-2.5 sm:mt-3 block"
+                  "font-serif italic text-lg sm:text-[21px] text-(--accent-base) tracking-normal mt-2.5 sm:mt-3 font-medium block"
+                : "font-sans text-base sm:text-[18px] font-semibold text-(--accent-base) tracking-tight mt-2.5 sm:mt-3 block"
               }
             />
           </div>
 
           {/* Contact Details */}
-          <div className="pt-2 text-[12px] text-[var(--text-muted)] flex flex-wrap items-center gap-x-2.5 gap-y-1.5 leading-normal">
+          <div className="pt-2 text-[12px] text-(--text-muted) flex flex-wrap items-center gap-x-2.5 gap-y-1.5 leading-normal">
             <span className="inline-flex items-center gap-2 whitespace-nowrap">
               <EditableText
                 value={applicant.location}
                 onChange={(val) => onUpdateApplicant("location", val)}
                 disabled={disabled}
               />
-              <span className="text-[var(--text-faint)] select-none opacity-60" aria-hidden="true">
+              <span className="text-(--text-faint) select-none opacity-60" aria-hidden="true">
                 ·
               </span>
             </span>
@@ -120,9 +120,9 @@ export const Masthead: React.FC<MastheadProps> = ({
                 value={applicant.phone}
                 onChange={(val) => onUpdateApplicant("phone", val)}
                 disabled={disabled}
-                className="hover:text-[var(--text-main)] transition-colors"
+                className="hover:text-(--text-main) transition-colors"
               />
-              <span className="text-[var(--text-faint)] select-none opacity-60" aria-hidden="true">
+              <span className="text-(--text-faint) select-none opacity-60" aria-hidden="true">
                 ·
               </span>
             </span>
@@ -133,9 +133,9 @@ export const Masthead: React.FC<MastheadProps> = ({
                 value={applicant.email}
                 onChange={(val) => onUpdateApplicant("email", val)}
                 disabled={disabled}
-                className="hover:text-[var(--accent-base)] transition-colors"
+                className="hover:text-(--accent-base) transition-colors"
               />
-              <span className="text-[var(--text-faint)] select-none opacity-60" aria-hidden="true">
+              <span className="text-(--text-faint) select-none opacity-60" aria-hidden="true">
                 ·
               </span>
             </span>
@@ -154,9 +154,9 @@ export const Masthead: React.FC<MastheadProps> = ({
                 value={applicant.artstation}
                 onChange={(val) => onUpdateApplicant("artstation", val)}
                 disabled={disabled}
-                className="hover:text-[var(--text-main)] hover:underline transition-colors"
+                className="hover:text-(--text-main) hover:underline transition-colors"
               />
-              <span className="text-[var(--text-faint)] select-none opacity-60" aria-hidden="true">
+              <span className="text-(--text-faint) select-none opacity-60" aria-hidden="true">
                 ·
               </span>
             </span>
@@ -175,7 +175,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                 value={applicant.website}
                 onChange={(val) => onUpdateApplicant("website", val)}
                 disabled={disabled}
-                className="font-medium text-[var(--accent-base)] hover:underline transition-colors"
+                className="font-medium text-(--accent-base) hover:underline transition-colors"
               />
             </span>
           </div>
@@ -184,7 +184,7 @@ export const Masthead: React.FC<MastheadProps> = ({
         {/* Right: Target Capsule */}
         {showTargetCard && (
           <aside
-            className="group/target relative bg-[var(--bg-subtle)]/80 dark:bg-[var(--bg-subtle)]/60 border border-[var(--border-sheet)]/80 dark:border-[var(--border-subtle)] rounded-2xl p-4 sm:p-5 text-xs w-full max-w-[340px] md:w-[340px] shrink-0 space-y-3.5 shadow-2xs transition-all duration-200"
+            className="group/target relative bg-(--bg-subtle)/80 dark:bg-(--bg-subtle)/60 border border-(--border-sheet)/80 dark:border-(--border-subtle) rounded-2xl p-4 sm:p-5 text-xs w-full max-w-[340px] md:w-[340px] shrink-0 space-y-3.5 shadow-2xs transition-all duration-200"
             aria-label="Target Requisition Metadata"
           >
             {!disabled && (
@@ -192,7 +192,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                 <button
                   type="button"
                   onClick={onToggleTargetCard}
-                  className="p-1.5 rounded-md bg-[var(--bg-sheet)]/95 backdrop-blur-xs border border-[var(--border-sheet)] shadow-xs text-[var(--text-faint)] hover:text-[var(--text-main)] hover:border-[var(--accent-base)] cursor-pointer flex items-center justify-center"
+                  className="p-1.5 rounded-md bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) shadow-xs text-(--text-faint) hover:text-(--text-main) hover:border-(--accent-base) cursor-pointer flex items-center justify-center"
                   title="Hide Target Card"
                   aria-label="Hide Target Card"
                 >
@@ -201,7 +201,7 @@ export const Masthead: React.FC<MastheadProps> = ({
               </div>
             )}
 
-            <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-[var(--text-faint)]">
+            <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-(--text-faint)">
               <div className="min-w-0 flex-1 truncate mr-2">
                 <EditableText
                   value={target.cardHeaderLabel || "Target Requisition"}
@@ -209,14 +209,14 @@ export const Masthead: React.FC<MastheadProps> = ({
                   disabled={disabled}
                   className={
                     isEditorial ?
-                      "font-serif italic text-xs tracking-normal text-[var(--text-muted)]"
-                    : "font-mono text-[10px] font-semibold text-[var(--text-muted)] tracking-wider"
+                      "font-serif italic text-xs tracking-normal text-(--text-muted)"
+                    : "font-mono text-[10px] font-semibold text-(--text-muted) tracking-wider"
                   }
                 />
               </div>
 
               <div className="flex items-center shrink-0 ml-auto">
-                <span className="font-mono text-[9px] uppercase tracking-wider bg-[var(--bg-sheet)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-full text-[var(--text-faint)] shadow-2xs select-none">
+                <span className="font-mono text-[9px] uppercase tracking-wider bg-(--bg-sheet) border border-(--border-subtle) px-2 py-0.5 rounded-full text-(--text-faint) shadow-2xs select-none">
                   <EditableText
                     value={target.cardBadgeLabel || "CONFIDENTIAL"}
                     onChange={(val) => onUpdateTarget("cardBadgeLabel", val)}
@@ -227,7 +227,7 @@ export const Masthead: React.FC<MastheadProps> = ({
             </div>
 
             <div className="space-y-1 pt-0.5">
-              <div className="text-[9.5px] uppercase tracking-wider text-[var(--text-faint)]">
+              <div className="text-[9.5px] uppercase tracking-wider text-(--text-faint)">
                 <EditableText
                   value={
                     target.statusLabel && target.statusLabel !== "Status" ?
@@ -246,8 +246,8 @@ export const Masthead: React.FC<MastheadProps> = ({
                 disabled={disabled}
                 className={
                   isEditorial ?
-                    "font-serif font-bold text-[20px] text-[var(--text-main)] leading-snug tracking-tight block"
-                  : "font-sans font-extrabold text-[17px] text-[var(--text-main)] leading-snug tracking-tight block"
+                    "font-serif font-bold text-[20px] text-(--text-main) leading-snug tracking-tight block"
+                  : "font-sans font-extrabold text-[17px] text-(--text-main) leading-snug tracking-tight block"
                 }
               />
               <EditableText
@@ -257,16 +257,16 @@ export const Masthead: React.FC<MastheadProps> = ({
                 disabled={disabled}
                 className={
                   isEditorial ?
-                    "font-serif italic text-[14px] text-[var(--accent-base)] font-medium leading-normal block mt-0.5"
-                  : "font-sans text-[12.5px] font-semibold text-[var(--accent-base)] tracking-tight leading-normal block mt-0.5"
+                    "font-serif italic text-[14px] text-(--accent-base) font-medium leading-normal block mt-0.5"
+                  : "font-sans text-[12.5px] font-semibold text-(--accent-base) tracking-tight leading-normal block mt-0.5"
                 }
               />
             </div>
 
-            <div className="pt-2.5 border-t border-[var(--border-sheet)]/60">
+            <div className="pt-2.5 border-t border-(--border-sheet)/60">
               <div className="grid grid-cols-[105px_1fr] gap-3 text-[11px] items-start">
                 <div className="space-y-0.5">
-                  <span className="text-[9.5px] text-[var(--text-faint)] uppercase tracking-wider block font-mono">
+                  <span className="text-[9.5px] text-(--text-faint) uppercase tracking-wider block font-mono">
                     <EditableText
                       value={target.dateLabel || "Date of Record"}
                       onChange={(val) => onUpdateTarget("dateLabel", val)}
@@ -274,7 +274,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                       className={isEditorial ? "font-serif italic capitalize" : "font-mono"}
                     />
                   </span>
-                  <div className="text-[var(--text-body)] font-medium whitespace-nowrap">
+                  <div className="text-(--text-body) font-medium whitespace-nowrap">
                     <EditableText
                       value={target.date}
                       onChange={(val) => onUpdateTarget("date", val)}
@@ -284,7 +284,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                 </div>
 
                 <div className="space-y-0.5 min-w-0">
-                  <span className="text-[9.5px] text-[var(--text-faint)] uppercase tracking-wider block font-mono">
+                  <span className="text-[9.5px] text-(--text-faint) uppercase tracking-wider block font-mono">
                     <EditableText
                       value={target.locationLabel || "Mobility & Notice"}
                       onChange={(val) => onUpdateTarget("locationLabel", val)}
@@ -293,7 +293,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                     />
                   </span>
                   <div
-                    className="text-[var(--text-body)] font-medium whitespace-nowrap overflow-hidden text-ellipsis"
+                    className="text-(--text-body) font-medium whitespace-nowrap overflow-hidden text-ellipsis"
                     title={target.location}
                   >
                     <EditableText
@@ -308,10 +308,10 @@ export const Masthead: React.FC<MastheadProps> = ({
 
             {showAvailability && (
               <div className="group/avail relative inline-flex items-center pt-1.5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium bg-[var(--bg-sheet)] border border-[var(--border-subtle)] text-[var(--accent-base)] shadow-2xs">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-medium bg-(--bg-sheet) border border-(--border-subtle) text-(--accent-base) shadow-2xs">
                   <span className="relative flex h-2 w-2 shrink-0 items-center justify-center">
-                    <span className="animate-ping availability-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent-base)] opacity-40"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent-base)]"></span>
+                    <span className="animate-ping availability-ping absolute inline-flex h-full w-full rounded-full bg-(--accent-base) opacity-40"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-(--accent-base)"></span>
                   </span>
                   <EditableText
                     value={target.availability}
@@ -326,7 +326,7 @@ export const Masthead: React.FC<MastheadProps> = ({
                     <button
                       type="button"
                       onClick={onToggleAvailability}
-                      className="p-1 rounded-md bg-[var(--bg-sheet)]/95 backdrop-blur-xs border border-[var(--border-sheet)] shadow-xs text-[var(--text-faint)] hover:text-[var(--text-main)] hover:border-[var(--accent-base)] cursor-pointer flex items-center justify-center"
+                      className="p-1 rounded-md bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) shadow-xs text-(--text-faint) hover:text-(--text-main) hover:border-(--accent-base) cursor-pointer flex items-center justify-center"
                       title="Hide availability badge"
                       aria-label="Hide availability badge"
                     >

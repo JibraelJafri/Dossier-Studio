@@ -120,8 +120,8 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         aria-valuenow={spacing.sheetPaddingY}
         aria-valuemin={12}
         aria-valuemax={120}
-        className={`absolute top-0 inset-x-0 transition-colors pointer-events-auto cursor-ns-resize group focus:outline-none focus:ring-1 focus:ring-[var(--accent-base)] ${
-          currentDisplay === "padding-top" ? "bg-[var(--accent-base)]/10" : ""
+        className={`absolute top-0 inset-x-0 transition-colors pointer-events-auto cursor-ns-resize group focus:outline-none focus:ring-1 focus:ring-(--accent-base) ${
+          currentDisplay === "padding-top" ? "bg-(--accent-base)/10" : ""
         }`}
         onPointerEnter={() => !isDragging && setHoverTarget("padding-top")}
         onPointerLeave={() => !isDragging && setHoverTarget(null)}
@@ -147,16 +147,16 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         <div
           className={`absolute bottom-0 inset-x-0 border-b border-dashed transition-all ${
             currentDisplay === "padding-top"
-              ? "border-[var(--accent-base)] opacity-100"
-              : "border-[var(--accent-base)]/30 opacity-0 group-hover:opacity-100"
+              ? "border-(--accent-base) opacity-100"
+              : "border-(--accent-base)/30 opacity-0 group-hover:opacity-100"
           }`}
         />
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 flex items-center justify-center">
           <div
             className={`px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold tracking-tight shadow-md flex items-center gap-1 transition-all ${
               currentDisplay === "padding-top"
-                ? "bg-[var(--accent-base)] text-white scale-105"
-                : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] opacity-0 group-hover:opacity-100 scale-95"
+                ? "bg-(--accent-base) text-white scale-105"
+                : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) opacity-0 group-hover:opacity-100 scale-95"
             }`}
           >
             <span>
@@ -176,8 +176,8 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         aria-valuenow={spacing.sheetPaddingY}
         aria-valuemin={12}
         aria-valuemax={120}
-        className={`absolute bottom-0 inset-x-0 transition-colors pointer-events-auto cursor-ns-resize group focus:outline-none focus:ring-1 focus:ring-[var(--accent-base)] ${
-          currentDisplay === "padding-bottom" ? "bg-[var(--accent-base)]/10" : ""
+        className={`absolute bottom-0 inset-x-0 transition-colors pointer-events-auto cursor-ns-resize group focus:outline-none focus:ring-1 focus:ring-(--accent-base) ${
+          currentDisplay === "padding-bottom" ? "bg-(--accent-base)/10" : ""
         }`}
         onPointerEnter={() => !isDragging && setHoverTarget("padding-bottom")}
         onPointerLeave={() => !isDragging && setHoverTarget(null)}
@@ -203,16 +203,16 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         <div
           className={`absolute top-0 inset-x-0 border-t border-dashed transition-all ${
             currentDisplay === "padding-bottom"
-              ? "border-[var(--accent-base)] opacity-100"
-              : "border-[var(--accent-base)]/30 opacity-0 group-hover:opacity-100"
+              ? "border-(--accent-base) opacity-100"
+              : "border-(--accent-base)/30 opacity-0 group-hover:opacity-100"
           }`}
         />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
           <div
             className={`px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold tracking-tight shadow-md flex items-center gap-1 transition-all ${
               currentDisplay === "padding-bottom"
-                ? "bg-[var(--accent-base)] text-white scale-105"
-                : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] opacity-0 group-hover:opacity-100 scale-95"
+                ? "bg-(--accent-base) text-white scale-105"
+                : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) opacity-0 group-hover:opacity-100 scale-95"
             }`}
           >
             <span>
@@ -232,8 +232,8 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         aria-valuenow={spacing.sheetPaddingX}
         aria-valuemin={16}
         aria-valuemax={120}
-        className={`absolute inset-y-0 left-0 transition-colors pointer-events-auto cursor-ew-resize group focus:outline-none focus:ring-1 focus:ring-[var(--accent-base)] ${
-          currentDisplay === "padding-left" ? "bg-[var(--accent-base)]/10" : ""
+        className={`absolute inset-y-0 left-0 transition-colors pointer-events-auto cursor-ew-resize group focus:outline-none focus:ring-1 focus:ring-(--accent-base) ${
+          currentDisplay === "padding-left" ? "bg-(--accent-base)/10" : ""
         }`}
         onPointerEnter={() => !isDragging && setHoverTarget("padding-left")}
         onPointerLeave={() => !isDragging && setHoverTarget(null)}
@@ -259,16 +259,16 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         <div
           className={`absolute inset-y-0 right-0 border-r border-dashed transition-all ${
             currentDisplay === "padding-left"
-              ? "border-[var(--accent-base)] opacity-100"
-              : "border-[var(--accent-base)]/30 opacity-0 group-hover:opacity-100"
+              ? "border-(--accent-base) opacity-100"
+              : "border-(--accent-base)/30 opacity-0 group-hover:opacity-100"
           }`}
         />
         <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 flex items-center justify-center">
           <div
             className={`px-1.5 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-tight shadow-md flex items-center gap-0.5 transition-all ${
               currentDisplay === "padding-left"
-                ? "bg-[var(--accent-base)] text-white scale-105"
-                : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] opacity-0 group-hover:opacity-100 scale-95"
+                ? "bg-(--accent-base) text-white scale-105"
+                : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) opacity-0 group-hover:opacity-100 scale-95"
             }`}
           >
             <span>↔ {currentDisplay === "padding-left" && isDragging ? liveValue : spacing.sheetPaddingX}px</span>
@@ -285,8 +285,8 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         aria-valuenow={spacing.sheetPaddingX}
         aria-valuemin={16}
         aria-valuemax={120}
-        className={`absolute inset-y-0 right-0 transition-colors pointer-events-auto cursor-ew-resize group focus:outline-none focus:ring-1 focus:ring-[var(--accent-base)] ${
-          currentDisplay === "padding-right" ? "bg-[var(--accent-base)]/10" : ""
+        className={`absolute inset-y-0 right-0 transition-colors pointer-events-auto cursor-ew-resize group focus:outline-none focus:ring-1 focus:ring-(--accent-base) ${
+          currentDisplay === "padding-right" ? "bg-(--accent-base)/10" : ""
         }`}
         onPointerEnter={() => !isDragging && setHoverTarget("padding-right")}
         onPointerLeave={() => !isDragging && setHoverTarget(null)}
@@ -312,16 +312,16 @@ export const InteractiveSpacingOverlay: React.FC<InteractiveSpacingOverlayProps>
         <div
           className={`absolute inset-y-0 left-0 border-l border-dashed transition-all ${
             currentDisplay === "padding-right"
-              ? "border-[var(--accent-base)] opacity-100"
-              : "border-[var(--accent-base)]/30 opacity-0 group-hover:opacity-100"
+              ? "border-(--accent-base) opacity-100"
+              : "border-(--accent-base)/30 opacity-0 group-hover:opacity-100"
           }`}
         />
         <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center">
           <div
             className={`px-1.5 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-tight shadow-md flex items-center gap-0.5 transition-all ${
               currentDisplay === "padding-right"
-                ? "bg-[var(--accent-base)] text-white scale-105"
-                : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] opacity-0 group-hover:opacity-100 scale-95"
+                ? "bg-(--accent-base) text-white scale-105"
+                : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) opacity-0 group-hover:opacity-100 scale-95"
             }`}
           >
             <span>↔ {currentDisplay === "padding-right" && isDragging ? liveValue : spacing.sheetPaddingX}px</span>
@@ -432,9 +432,9 @@ export const InterSectionGap: React.FC<InterSectionGapProps> = ({
       aria-valuenow={gap}
       aria-valuemin={4}
       aria-valuemax={120}
-      className={`relative w-full select-none transition-colors flex items-center justify-center focus:outline-none focus:ring-1 focus:ring-[var(--accent-base)] ${
+      className={`relative w-full select-none transition-colors flex items-center justify-center focus:outline-none focus:ring-1 focus:ring-(--accent-base) ${
         !disabled ? "cursor-ns-resize group/gap" : ""
-      } ${!disabled && (isHovered || isDragging) ? "bg-[var(--accent-base)]/8" : ""}`}
+      } ${!disabled && (isHovered || isDragging) ? "bg-(--accent-base)/8" : ""}`}
       onPointerEnter={() => !disabled && setIsHovered(true)}
       onPointerLeave={() => !disabled && !isDragging && setIsHovered(false)}
       onPointerDown={!disabled ? handlePointerDown : undefined}
@@ -469,19 +469,19 @@ export const InterSectionGap: React.FC<InterSectionGapProps> = ({
           <div
             className={`w-full border-t border-dashed transition-all ${
               isHovered || isDragging
-                ? "border-[var(--accent-base)] opacity-100"
+                ? "border-(--accent-base) opacity-100"
                 : isCustom
-                ? "border-[var(--accent-base)]/40 opacity-70"
-                : "border-[var(--border-subtle)] opacity-0 group-hover/gap:opacity-60"
+                ? "border-(--accent-base)/40 opacity-70"
+                : "border-(--border-subtle) opacity-0 group-hover/gap:opacity-60"
             }`}
           />
           <div
             className={`absolute px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold shadow-md flex items-center gap-1.5 transition-all ${
               isHovered || isDragging
-                ? "bg-[var(--accent-base)] text-white scale-100 opacity-100"
+                ? "bg-(--accent-base) text-white scale-100 opacity-100"
                 : isCustom
-                ? "bg-[var(--accent-soft)] text-[var(--accent-base)] border border-[var(--accent-border)] opacity-85 scale-95"
-                : "bg-[var(--bg-sheet)] border border-[var(--border-sheet)] text-[var(--text-muted)] scale-90 opacity-0 group-hover/gap:opacity-100"
+                ? "bg-(--accent-soft) text-(--accent-base) border border-(--accent-border) opacity-85 scale-95"
+                : "bg-(--bg-sheet) border border-(--border-sheet) text-(--text-muted) scale-90 opacity-0 group-hover/gap:opacity-100"
             }`}
           >
             <span>↕ {isDragging ? liveVal : gap}px</span>

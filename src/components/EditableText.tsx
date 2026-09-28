@@ -258,7 +258,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
     }
   };
 
-  const baseClassName = `outline-none transition-colors duration-150 rounded-xs focus-visible:ring-1 focus-visible:ring-[var(--accent-base)] ${
+  const baseClassName = `outline-none transition-colors duration-150 rounded-xs focus-visible:ring-1 focus-visible:ring-(--accent-base) ${
     !isEditing && !disabled ? "cursor-text" : ""
   } ${className}`;
 
@@ -287,13 +287,13 @@ export const EditableText: React.FC<EditableTextProps> = ({
     return (
       <div className="relative group/editable-container">
         <div
-          className="markdown-toolbar-container no-print absolute -top-11 left-0 z-40 flex items-center gap-1 px-2 py-1 bg-[var(--bg-sheet)] border border-[var(--border-sheet)] rounded-lg shadow-lg text-xs backdrop-blur-md"
+          className="markdown-toolbar-container no-print absolute -top-11 left-0 z-40 flex items-center gap-1 px-2 py-1 bg-(--bg-sheet) border border-(--border-sheet) rounded-lg shadow-lg text-xs backdrop-blur-md"
           onMouseDown={(e) => e.preventDefault()}
         >
           <button
             type="button"
             onClick={() => applyFormatting("bold")}
-            className="p-1 rounded text-[var(--text-main)] hover:bg-[var(--bg-subtle)] hover:text-[var(--accent-base)] transition-colors cursor-pointer"
+            className="p-1 rounded text-(--text-main) hover:bg-(--bg-subtle) hover:text-(--accent-base) transition-colors cursor-pointer"
             title="Bold (**text**) · Ctrl+B"
             aria-label="Bold text"
           >
@@ -302,7 +302,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
           <button
             type="button"
             onClick={() => applyFormatting("italic")}
-            className="p-1 rounded text-[var(--text-main)] hover:bg-[var(--bg-subtle)] hover:text-[var(--accent-base)] transition-colors cursor-pointer"
+            className="p-1 rounded text-(--text-main) hover:bg-(--bg-subtle) hover:text-(--accent-base) transition-colors cursor-pointer"
             title="Italic (*text*) · Ctrl+I"
             aria-label="Italic text"
           >
@@ -311,7 +311,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
           <button
             type="button"
             onClick={handleOpenLinkDialog}
-            className="p-1 rounded text-[var(--text-main)] hover:bg-[var(--bg-subtle)] hover:text-[var(--accent-base)] transition-colors cursor-pointer"
+            className="p-1 rounded text-(--text-main) hover:bg-(--bg-subtle) hover:text-(--accent-base) transition-colors cursor-pointer"
             title="Insert Link ([text](url)) · Ctrl+K"
             aria-label="Insert Link"
           >
@@ -320,17 +320,17 @@ export const EditableText: React.FC<EditableTextProps> = ({
           <button
             type="button"
             onClick={() => applyFormatting("code")}
-            className="p-1 rounded text-[var(--text-main)] hover:bg-[var(--bg-subtle)] hover:text-[var(--accent-base)] transition-colors cursor-pointer"
+            className="p-1 rounded text-(--text-main) hover:bg-(--bg-subtle) hover:text-(--accent-base) transition-colors cursor-pointer"
             title="Inline Code (`code`) · Ctrl+`"
             aria-label="Inline Code"
           >
             <Code className="w-3.5 h-3.5" />
           </button>
-          <div className="w-[1px] h-3.5 bg-[var(--border-sheet)] mx-0.5" />
+          <div className="w-px h-3.5 bg-(--border-sheet) mx-0.5" />
           <button
             type="button"
             onClick={() => setShowSyntaxGuide(!showSyntaxGuide)}
-            className="p-1 rounded text-[var(--text-faint)] hover:text-[var(--text-main)] hover:bg-[var(--bg-subtle)] transition-colors cursor-pointer"
+            className="p-1 rounded text-(--text-faint) hover:text-(--text-main) hover:bg-(--bg-subtle) transition-colors cursor-pointer"
             title="Markdown syntax reference"
             aria-label="Markdown Guide"
           >
@@ -345,7 +345,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
               setShowSyntaxGuide(false);
               setLinkError(null);
             }}
-            className="flex items-center gap-1 px-2 py-0.5 bg-[var(--accent-base)] text-white text-[11px] font-medium rounded hover:opacity-90 transition-opacity cursor-pointer ml-1"
+            className="flex items-center gap-1 px-2 py-0.5 bg-(--accent-base) text-white text-[11px] font-medium rounded hover:opacity-90 transition-opacity cursor-pointer ml-1"
             title="Finish editing"
           >
             <Check className="w-3 h-3" />
@@ -355,33 +355,33 @@ export const EditableText: React.FC<EditableTextProps> = ({
 
         {showSyntaxGuide && (
           <div
-            className="markdown-toolbar-container no-print absolute -top-24 left-0 z-50 p-2.5 bg-[var(--bg-sheet)] border border-[var(--border-sheet)] rounded-xl shadow-xl text-[11px] space-y-1 min-w-[260px] text-[var(--text-muted)]"
+            className="markdown-toolbar-container no-print absolute -top-24 left-0 z-50 p-2.5 bg-(--bg-sheet) border border-(--border-sheet) rounded-xl shadow-xl text-[11px] space-y-1 min-w-[260px] text-(--text-muted)"
             onMouseDown={(e) => e.preventDefault()}
           >
-            <div className="font-semibold text-[var(--text-main)] pb-0.5 border-b border-[var(--border-sheet)]">
+            <div className="font-semibold text-(--text-main) pb-0.5 border-b border-(--border-sheet)">
               Markdown Syntax Guide
             </div>
             <div>
-              <code className="text-[var(--accent-base)]">**bold text**</code>
+              <code className="text-(--accent-base)">**bold text**</code>
             </div>
             <div>
-              <code className="text-[var(--accent-base)]">*italic text*</code>
+              <code className="text-(--accent-base)">*italic text*</code>
             </div>
             <div>
-              <code className="text-[var(--accent-base)]">[Link Label](https://url.com)</code>
+              <code className="text-(--accent-base)">[Link Label](https://url.com)</code>
             </div>
             <div>
-              <code className="text-[var(--accent-base)]">`code / technical term`</code>
+              <code className="text-(--accent-base)">`code / technical term`</code>
             </div>
           </div>
         )}
 
         {showLinkDialog && (
           <div
-            className="markdown-toolbar-container no-print absolute -top-36 left-0 z-50 p-3 bg-[var(--bg-sheet)] border border-[var(--border-sheet)] rounded-xl shadow-2xl space-y-2 min-w-[280px]"
+            className="markdown-toolbar-container no-print absolute -top-36 left-0 z-50 p-3 bg-(--bg-sheet) border border-(--border-sheet) rounded-xl shadow-2xl space-y-2 min-w-[280px]"
             onMouseDown={(e) => e.stopPropagation()}
           >
-            <div className="text-[11px] font-bold text-[var(--text-main)] flex items-center justify-between">
+            <div className="text-[11px] font-bold text-(--text-main) flex items-center justify-between">
               <span>Insert Hyperlink</span>
               <button
                 type="button"
@@ -389,13 +389,13 @@ export const EditableText: React.FC<EditableTextProps> = ({
                   setShowLinkDialog(false);
                   setLinkError(null);
                 }}
-                className="text-[var(--text-faint)] hover:text-[var(--text-main)] text-xs cursor-pointer p-0.5"
+                className="text-(--text-faint) hover:text-(--text-main) text-xs cursor-pointer p-0.5"
               >
                 ✕
               </button>
             </div>
             <div>
-              <label className="text-[10px] uppercase font-mono text-[var(--text-faint)] block mb-0.5">
+              <label className="text-[10px] uppercase font-mono text-(--text-faint) block mb-0.5">
                 Display Text
               </label>
               <input
@@ -406,11 +406,11 @@ export const EditableText: React.FC<EditableTextProps> = ({
                   if (e.key === "Enter") handleInsertLink();
                 }}
                 placeholder="e.g. Project Portfolio"
-                className="w-full text-xs px-2 py-1 bg-[var(--bg-subtle)] border border-[var(--border-sheet)] rounded text-[var(--text-main)] outline-none focus:border-[var(--accent-base)]"
+                className="w-full text-xs px-2 py-1 bg-(--bg-subtle) border border-(--border-sheet) rounded text-(--text-main) outline-none focus:border-(--accent-base)"
               />
             </div>
             <div>
-              <label className="text-[10px] uppercase font-mono text-[var(--text-faint)] block mb-0.5">
+              <label className="text-[10px] uppercase font-mono text-(--text-faint) block mb-0.5">
                 Destination URL
               </label>
               <input
@@ -424,7 +424,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
                   if (e.key === "Enter") handleInsertLink();
                 }}
                 placeholder="https://example.com"
-                className="w-full text-xs font-mono px-2 py-1 bg-[var(--bg-subtle)] border border-[var(--border-sheet)] rounded text-[var(--text-main)] outline-none focus:border-[var(--accent-base)]"
+                className="w-full text-xs font-mono px-2 py-1 bg-(--bg-subtle) border border-(--border-sheet) rounded text-(--text-main) outline-none focus:border-(--accent-base)"
               />
               {linkError && (
                 <span className="text-[10px] text-red-500 block pt-0.5">{linkError}</span>
@@ -437,14 +437,14 @@ export const EditableText: React.FC<EditableTextProps> = ({
                   setShowLinkDialog(false);
                   setLinkError(null);
                 }}
-                className="px-2 py-0.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] cursor-pointer"
+                className="px-2 py-0.5 text-xs text-(--text-muted) hover:text-(--text-main) cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleInsertLink}
-                className="px-3 py-1 bg-[var(--accent-base)] text-white text-xs font-medium rounded hover:opacity-90 cursor-pointer"
+                className="px-3 py-1 bg-(--accent-base) text-white text-xs font-medium rounded hover:opacity-90 cursor-pointer"
               >
                 Apply Link
               </button>

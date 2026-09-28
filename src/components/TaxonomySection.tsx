@@ -54,7 +54,7 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
           <button
             type="button"
             onClick={handleHide}
-            className="p-1.5 rounded-md bg-[var(--bg-sheet)]/95 backdrop-blur-xs border border-[var(--border-sheet)] shadow-xs text-[var(--text-faint)] hover:text-[var(--text-main)] hover:border-[var(--accent-base)] cursor-pointer flex items-center justify-center"
+            className="p-1.5 rounded-md bg-(--bg-sheet)/95 backdrop-blur-xs border border-(--border-sheet) shadow-xs text-(--text-faint) hover:text-(--text-main) hover:border-(--accent-base) cursor-pointer flex items-center justify-center"
             title="Hide Taxonomy Section"
             aria-label="Hide Taxonomy Section"
           >
@@ -69,8 +69,8 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
           <span
             className={
               isEditorial ?
-                "font-serif italic text-lg text-[var(--accent-base)]"
-              : "font-mono text-xs font-bold text-[var(--accent-base)]"
+                "font-serif italic text-lg text-(--accent-base)"
+              : "font-mono text-xs font-bold text-(--accent-base)"
             }
           >
             <EditableText
@@ -82,8 +82,8 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
           <span
             className={
               isEditorial ?
-                "font-serif text-2xl sm:text-3xl font-medium tracking-tight text-[var(--text-main)]"
-              : "font-sans text-sm font-bold uppercase tracking-wider text-[var(--text-main)]"
+                "font-serif text-2xl sm:text-3xl font-medium tracking-tight text-(--text-main)"
+              : "font-sans text-sm font-bold uppercase tracking-wider text-(--text-main)"
             }
           >
             <EditableText
@@ -97,8 +97,8 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
         <span
           className={
             isEditorial ?
-              "font-serif italic text-xs text-[var(--text-faint)] sm:text-right"
-            : "font-mono text-[11px] text-[var(--text-faint)] sm:text-right"
+              "font-serif italic text-xs text-(--text-faint) sm:text-right"
+            : "font-mono text-[11px] text-(--text-faint) sm:text-right"
           }
         >
           <EditableText
@@ -117,7 +117,7 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
           <div key={cIdx} className="space-y-4">
             <div className="pb-1 space-y-0.5">
               {/* Category Tag Header */}
-              <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--accent-base)] font-semibold">
+              <div className="text-[10px] font-mono uppercase tracking-wider text-(--accent-base) font-semibold">
                 <EditableText
                   value={col.categoryTag || "Track"}
                   onChange={(val) => onUpdateCategoryTag?.(cIdx, val)}
@@ -129,8 +129,8 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
               <h3
                 className={
                   isEditorial ?
-                    "font-serif font-medium text-xl text-[var(--text-main)]"
-                  : "font-semibold text-xs uppercase tracking-wider text-[var(--text-main)]"
+                    "font-serif font-medium text-xl text-(--text-main)"
+                  : "font-semibold text-xs uppercase tracking-wider text-(--text-main)"
                 }
               >
                 <EditableText
@@ -148,7 +148,7 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
                     <button
                       type="button"
                       onClick={() => onRemoveItem(cIdx, iIdx)}
-                      className="absolute right-0 top-0.5 p-0.5 text-[var(--text-faint)] hover:text-red-600 rounded opacity-0 group-hover/item:opacity-100 transition-opacity duration-150 cursor-pointer no-print z-20"
+                      className="absolute right-0 top-0.5 p-0.5 text-(--text-faint) hover:text-red-600 rounded opacity-0 group-hover/item:opacity-100 transition-opacity duration-150 cursor-pointer no-print z-20"
                       title="Remove skill item"
                     >
                       <Trash2 className="w-3 h-3" />
@@ -158,8 +158,8 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
                   <div
                     className={
                       isEditorial ?
-                        "font-serif font-medium text-base text-[var(--text-main)] leading-snug"
-                      : "font-semibold text-xs text-[var(--text-main)] leading-snug"
+                        "font-serif font-medium text-base text-(--text-main) leading-snug"
+                      : "font-semibold text-xs text-(--text-main) leading-snug"
                     }
                   >
                     <EditableText
@@ -170,7 +170,7 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
                   </div>
 
                   <div
-                    className={`pt-0.5 text-[var(--text-muted)] ${
+                    className={`pt-0.5 text-(--text-muted) ${
                       isEditorial ?
                         "font-serif text-sm leading-relaxed"
                       : "text-[11.5px] leading-relaxed"
@@ -191,7 +191,7 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({
                   <button
                     type="button"
                     onClick={() => onAddItem(cIdx)}
-                    className="text-[11px] font-mono text-[var(--text-faint)] hover:text-[var(--accent-base)] inline-flex items-center gap-1 cursor-pointer transition-colors"
+                    className="text-[11px] font-mono text-(--text-faint) hover:text-(--accent-base) inline-flex items-center gap-1 cursor-pointer transition-colors"
                     title={`Add competency to ${col.title}`}
                   >
                     <Plus className="w-2.5 h-2.5" />
