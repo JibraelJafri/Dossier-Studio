@@ -9,7 +9,7 @@ interface StatementSectionProps {
   paragraphGap: number;
   onChangeParagraphGap?: (newGap: number) => void;
   onUpdateLetterMeta: <K extends keyof LetterInfo>(field: K, val: LetterInfo[K]) => void;
-  onUpdateSalutation: (val: string) => void;
+  onUpdateSalutation: (val) => void;
   onUpdateParagraph: (index: number, val: string) => void;
   onAddParagraph: () => void;
   onRemoveParagraph: (index: number) => void;
