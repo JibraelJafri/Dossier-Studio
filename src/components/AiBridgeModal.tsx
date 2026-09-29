@@ -140,75 +140,40 @@ export const AiBridgeModal: React.FC<AiBridgeModalProps> = ({
   };
 
   const generatePrompt = () => {
-    const candidateName = dossierData.applicant.name || "Candidate";
-    const candidateTitle = dossierData.applicant.title || "Technical Artist & Systems TD";
+    const scopeDescriptions: Record<SyncScope, string> = {
+      full: "the complete master dossier structure",
+      statement: "the 'letter' section (executive statement of intent)",
+      benchmarks:
+        "the 'metrics' (telemetry achievements) and 'taxonomy' (core competency pillars) sections",
+    };
 
-    const basePrompt = `You are an elite Principal Technical Director and Studio Technical Art Hiring Lead.
-Your objective is to author an authoritative, versatile, generalized executive technical dossier and cover letter for:
-- Candidate: ${candidateName}
-- Professional Discipline / Focus: ${candidateTitle}
-${jobContext.trim() ? `\nADDITIONAL TECHNICAL SPECIALTIES / DOMAIN FOCUS:\n${jobContext.trim()}\n` : ""}
+    const targetPayload =
+      syncScope === "statement" ? { letter: dossierData.letter }
+      : syncScope === "benchmarks" ?
+        {
+          metricsHeader: dossierData.metricsHeader,
+          metrics: dossierData.metrics,
+          taxonomyHeader: dossierData.taxonomyHeader,
+          taxonomy: dossierData.taxonomy,
+        }
+      : dossierData;
 
-CRITICAL OPERATIONAL CONSTRAINT — GENERALIZED TECHNICAL PROFILE:
-Do NOT lock or tailor this content to any specific company, employer, studio name, or requisition ID. The copy must be generalized, universally compelling, and production-credible across all top-tier AAA game development and real-time interactive technology studios. Highlight technical architecture, procedural world generation, shader pipelines, low-level frametime budgets, and pipeline automation.`;
+    return `TASK: Structure and format the dossier data according to the exact JSON schema provided below.
 
-    if (syncScope === "statement") {
-      return `${basePrompt}
+INSTRUCTIONS:
+1. Populate ${scopeDescriptions[syncScope]} using the candidate profile, resume details, or instructions established in our conversation.
+2. Maintain identical JSON keys, nesting, and data types as shown in the reference schema.
+3. Ensure all array counts match the reference (e.g., exactly 3 telemetry metric cards, exactly 3 taxonomy pillars).
+${jobContext.trim() ? `4. Specific User Guidance: "${jobContext.trim()}"\n` : ""}
+STRICT OUTPUT FORMAT:
+- Return ONLY a valid JSON object matching the reference structure.
+- Wrap the output in a single \`\`\`json ... \`\`\` code block.
+- Do NOT include markdown explanations, preambles, or conversational sign-offs.
 
-TASK: Author a generalized Statement of Intent (executive technical cover letter prose).
-Requirements:
-1. Deliver a compelling statement of intent emphasizing technical depth: sub-millisecond frametime budgets, custom shader instruction culling, procedural generation graphs, and bridging artistic ambition with engine engineering.
-2. Keep the salutation generalized (e.g. "Dear Technical Art Leads & Hiring Team,").
-3. Do NOT target any single specific employer or company.
-
-CURRENT PROSE JSON SCHEMA:
+REFERENCE JSON SCHEMA & CURRENT DATA:
 \`\`\`json
-${JSON.stringify({ letter: dossierData.letter }, null, 2)}
-\`\`\`
-
-REQUIREMENT: Output ONLY a valid JSON object matching the schema above wrapped in a single \`\`\`json \`\`\` code block. No conversational filler or explanations.`;
-    }
-
-    if (syncScope === "benchmarks") {
-      return `${basePrompt}
-
-TASK: Generate 3 verified technical telemetry benchmarks and 3 core architecture competency columns.
-Requirements:
-1. Provide measurable, generalized production performance achievements (e.g., draw-call reduction, automation cook throughput, procedural territory scale, VRAM streaming).
-2. Competency columns must represent core pillars: Shading & GPU Core, Procedural & Engine Systems, and Pipelines & Automation Toolchains.
-3. Keep all metrics and competency categories generalized and applicable across premier real-time engines.
-
-CURRENT BENCHMARKS & TAXONOMY:
-\`\`\`json
-${JSON.stringify(
-  {
-    metricsHeader: dossierData.metricsHeader,
-    metrics: dossierData.metrics,
-    taxonomyHeader: dossierData.taxonomyHeader,
-    taxonomy: dossierData.taxonomy,
-  },
-  null,
-  2,
-)}
-\`\`\`
-
-REQUIREMENT: Output ONLY a valid JSON object matching the schema above wrapped in a single \`\`\`json \`\`\` code block. No conversational filler.`;
-    }
-
-    return `${basePrompt}
-
-TASK: Generate a complete generalized executive technical dossier.
-Requirements:
-1. Target and requisition metadata fields must remain generalized (e.g., attention to "Technical Art & Systems Leadership", studio identifier as "Premier AAA Studio / Interactive Tech", track as "Core Engine, Worldbuilding & Pipelines").
-2. The statement prose, 3 telemetry benchmark cards, and 3 taxonomy competency columns must be generalized, high-impact, and universally persuasive.
-3. Retain the candidate's personal contact details in applicant and signoff.
-
-CURRENT MASTER DOSSIER:
-\`\`\`json
-${JSON.stringify(dossierData, null, 2)}
-\`\`\`
-
-REQUIREMENT: Output ONLY the valid JSON object wrapped in a single \`\`\`json \`\`\` code block. No commentary.`;
+${JSON.stringify(targetPayload, null, 2)}
+\`\`\``;
   };
 
   const handleCopyPrompt = async () => {
